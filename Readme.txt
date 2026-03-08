@@ -7,6 +7,7 @@ Actually, the features implemented as DLL functions are:
 - creation of the WebView components, positonning and sizing them on a destination component
 - deletion of these compoents and liberation of the ressources
 - loading and display of the default page (bin.com)
+- programmatically navigate o any webpage
 - execution of JavaScript, as well as directly from HTML as programmatically by a DLL function
 - recover an HTML element's content into the calling Delphi program as string
 - setting an HTML element's content from the calling Delphi program as string 
@@ -17,6 +18,12 @@ Actually, the features implemented as DLL functions are:
 - these shifts are done programmatically by a DLL function sending JavaScript snippets to the webpage
 - a demo program showing these features
 - a demo webpage containing a huge SVG image, and the associated JavaScript files
+
+Some of the points stil to be done:
+- implement the message pathway "from delphi to HTML"
+- manage the component's internal scrollbars (visible/invisible)
+- manage the component's internal URL field and "Go" button
+- recover the loaded webpage's dimensions
 
 Package content:
 - full WebView4Delphi sources, modified to fit the above purposes
