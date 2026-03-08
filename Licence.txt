@@ -1,0 +1,11 @@
+Licence for WebView4Delphi_Messages_With_DLL project
+
+This product, with all it's components, is published under the following licence:
+https://github.com/salvadordf/WebUI4Delphi/blob/a70e8141f982a08dbeb423785fd5305fdf4cc31a/LICENSE
+
+This is the original licence covering the WebView4Delphi project with all it's parts.
+This licence continues to apply:
+  - to the original parts
+  - to the parts modified by me
+
+Additonnally, the right of any modification applied by me to the original parts are fully devoted to the auther of the original product.
