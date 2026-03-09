@@ -15,6 +15,7 @@ Actually, the features implemented as DLL functions are:
 - loading of local files, including SVG images
 - these images are really limitless - the supplied demo image is 40.000 pixels wide, but it could as wass have been 4 Giga pixels...
 - possibility to shift the SVG's ViewBox horizontally and/or vertically, regardless of the dimension sizes
+- possibility to zoom in or out
 - these shifts are done programmatically by a DLL function sending JavaScript snippets to the webpage
 - a demo program showing these features
 - a demo webpage containing a huge SVG image, and the associated JavaScript files
@@ -52,3 +53,4 @@ especially concerning the "c,l" part.
 The received messages are appended to a Delphi TList object, acting as a FIFO stack for the handling of these messages.
 An application program (perhaps notified by an OnChange event of the TList object) should always read the first
 item (index 0) of this list, handle it, than delete it, evetually within a loop until the list is empty.
+
