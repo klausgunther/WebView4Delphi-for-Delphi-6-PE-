@@ -40,6 +40,9 @@ It has external horizontal and vertical scrollbars, too.
 These are to be used only with the external file "dessin.htm" loaded with the "Load local file".
 They are used to croll the SVG image's ViewBox, all over the image.
 
+There is a "Zoom" panel, too. he horizontal and vertical scrollbars withn this panel have a zoom action
+on the SVG image, using JavaScript to change the width and height of the ViewBox.
+
 When this dessin.htm image is loaded, a clic into any cell shown in the ViewBox will send 
 a string message to the calling program, formatted as x,y/c,l
 with x,y being the exact click location in pixels, and c,l being the column and line indexes of the clicked cell.
