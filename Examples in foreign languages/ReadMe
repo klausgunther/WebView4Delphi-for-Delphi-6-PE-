@@ -1,1 +1,3 @@
 This folder contains sources of example programs in languages other than Delphi, using the DLLBrowser library.
+
+Test_WebView4Delphi_dll.bas is a program written in Panoramic (a Basic clone)
