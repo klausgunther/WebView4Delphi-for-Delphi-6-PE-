@@ -172,7 +172,22 @@ Syntax:
 								  ListObject.Handle
 								  Memobject.Handle
     return value:  -1 if error  0 if ok 
+	
+This function launches the execution of the JavaScript snippet passed as string parameter, within the browser's context.
+
+Function to manage the browser's address panel
+==============================================
+
+Syntax:
+  res := SetBrowserAdddressPanel(WBF,Action);
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the address panel managment   0 = hide the panel    <>0 = show the panel
+    return value:  -1 if error  0 if ok 
+
+This function acts on the browser's internal adresss panel showing an URL field and a "Go" button. 
+Sometimes, it is necessary to hide those parts and manage the URL navigation programmatically. 
+For that purpose, this function can be used to hide or show the Address Panel.
 
 
 Note:
-  This documentation reflects the actual implementtion level on March 10th, 2026.
+  This documentation reflects the actual implementtion level on March 11th, 2026.
