@@ -7,18 +7,19 @@ Actually, the features implemented as DLL functions are:
 - creation of the WebView components, positonning and sizing them on a destination component
 - deletion of these compoents and liberation of the ressources
 - loading and display of the default page (bin.com)
-- programmatically navigate o any webpage
+- programmatically navigate to any webpage including local files using the "file:///" protocol
 - execution of JavaScript, as well as directly from HTML as programmatically by a DLL function
 - recover an HTML element's content into the calling Delphi program as string
 - setting an HTML element's content from the calling Delphi program as string 
 - receiving string messages from the HTML/Javascript into a Delphi TList component
+- sending string messages from a Delphi program to a browser page's HTML/Javascript
 - loading of local files, including SVG images
 - these images are really limitless - the supplied demo image is 40.000 pixels wide, but it could as wass have been 4 Giga pixels...
 - possibility to hide programmatically the browser's internal croll bars
 - possibility to shift the SVG's ViewBox horizontally and/or vertically, regardless of the dimension sizes
 - these shifts are done programmatically by a DLL function sending JavaScript snippets to the webpage
 - possibility to zoom in or out
-- the SVG demo file represent a table with 11 rows and 400 columns, each column 100 pixels wide, each row 25 pixels high.
+- the SVG demo file represents a table with 11 rows and 400 columns, each column 100 pixels wide, each row 25 pixels high.
 - a click into any cell of the table sends a message so the Delphi program indicating the x,y coordinates of the click,
   as well as the cell coordinates co,row. Even after shifting the VieBox, with or without zoom, these cell indexes
   are always correct.
@@ -26,7 +27,6 @@ Actually, the features implemented as DLL functions are:
 - a demo webpage containing a huge SVG image, and the associated JavaScript files
 
 Some of the points stil to be done:
-- implement the message pathway "from delphi to HTML"
 - manage the component's internal URL field and "Go" button
 - recover the loaded webpage's dimensions
 
