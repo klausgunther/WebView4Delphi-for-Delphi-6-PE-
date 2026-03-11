@@ -13,7 +13,7 @@ This work, written by Klaus Fischer, is based on the work of
   Copyright (c) 2026 Salvador Díaz Fau,
 whose licence conditions fully applay to any code pblished by him, as well as code writen by me,
 with the additional note that any part of my code is totally free for anybody, for any usage,
-be it private, institutiional, assicoative, professional or commercial.
+be it private, institutiional, associative, professional or commercial.
 
 Important note
 ==============
@@ -127,6 +127,25 @@ Function to receive a message from the browser
 There is no such explicit function. The Library is just listening for incoming messages, but the initialive lies 
 on the browser's side, through specialized JavaScript code. One can imagine the main program sending a quey message
 to the browser, hoping that on the browser'side, a JavaScrpt code is provided to handle the request and act as reuired.
+
+Function to navigate to a URL
+=============================
+
+Syntax:
+  res := BrowserNavigate(WBF,UrlID);
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the scrollbar managment   0 = hide the scrollbars    <>0 = show the scrollbars
+	            UrlID  = identificator of the URL string
+				               This can be:
+							      @StringVariable
+								  @stringVariable[0]
+								  ListObject.Handle
+								  Memobject.Handle
+    return value:  -1 if error  0 if ok 
+	
+	This function lets the browser navigate to the specified URL. This includes obviously normal internet URL,
+	but may be used also to load files from local disks. In this case, the full path name tu the file must be
+	prefixed with the "file:///" protocol specification.
 
 Function to manage the browser's internal scroll bars
 =====================================================
