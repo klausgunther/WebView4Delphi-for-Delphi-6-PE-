@@ -1,0 +1,3 @@
+This folder contains the complete sources of WebView4Delphi modified by Klausgunther.
+This version is specially dedicated to produce a Delphi DLL with the WebView4Delphi component,
+to be used by any program able to call external DLL functions, statically or dynamically linked.
