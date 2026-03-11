@@ -1,0 +1,193 @@
+Documentation for the functions included within DllBrowser.dll
+==============================================================
+
+This DLL contains the functions implementing the WebView4Delphi components for Delphi 6 PE.
+This DLL is dellopped in Delphi 5 personal edition. It can esily be called from Delpi programs of later versions.
+It may be recompiled with later delphi versions; but this has not been tested.
+
+The DLL and it's sources are published on GitHub:
+      https://github.com/klausgunther/WebView4Delphi-for-Delphi-6-PE-
+There is the licence reference, too. Essentially MIT licence.
+
+This work, written by Klaus Fischer, is based on the work of 
+  Copyright (c) 2026 Salvador Díaz Fau,
+whose licence conditions fully applay to any code pblished by him, as well as code writen by me,
+with the additional note that any part of my code is totally free for anybody, for any usage,
+be it private, institutiional, associative, professional or commercial.
+
+Important note
+==============
+
+The work is still ongoing. More features will soon be available, mainly through new functions in the library.
+Hereas the concepts underlying the present implementation are not subject to change, there may be possible
+changes to parameter lists or parameter usage of some functions. 
+
+Library contents
+================
+
+This library exports functions implementing the features of the WebView4Delphi components, written in Delphi 6 PE
+and callable by any other langage able to call DLL functions.
+
+The calling interface is simple:
+In Delphi terms, all functions obey the same scheme:
+  var
+    res: integer;
+  ...
+  implemention
+  ...
+  res := DllFunction(arg1,...,argn);  // the calling convention is always STDCALL
+The result is always a n integer value. This value is generally -1 on error, or 0 if ok.
+There is a single exception of this rule, documented in the section of the concerned function.
+
+Function to create the WebVew4Delphi environment
+================================================
+
+Syntax:
+  res := InitializeWebView4Delphi;    
+    parameters: none
+    return value:  -1 if error  0 if ok
+  
+This function mst be called once, before any call to any other functions of the library.
+It can be called at any moment, even in the OnCreate event of the main form.
+
+Function to remove the WebVew4Delphi environment
+================================================
+
+Syntax:
+  res := FinalizeWebView4Delphi;    
+    parameters: none
+    return value:  -1 if error  0 if ok
+	
+This function should called when the WebBrowser is no longer required. it is needed to free the ressources.
+It can be called anywhere, at least in the OnClose event of the main form.
+
+Function to create and show a WebBrowser in a Containing object
+===============================================================
+
+Syntax:
+  WBF := ShowBrowser(TargetHandle,BorderLess, X,Y,W,H);  
+    parameters: TargetHandle = handle of the target container (Form, Tab, Container, Panel, ...)
+	            BorderLess  = flag to suppress border and title bar of the browser  0=show borders  <>0 = no borders
+				X,Y = coordinates in client units for the upper left corner of the browser within the target object
+				W,H = dimensions of the browser window in pixels
+    return value:  0 if error  <>0 if ok (the return value is the created TWebBrowserForm object.
+	
+This function creates the WebView browser, attaches it to the WebView4Delphi environment and loads it into the target object.
+Soon, there will be another function allowing to move and/or resize the browser window, even to change the target object.
+
+The returned TWebBrowserForm object can be used within the calling program using the type definition supplied by the
+uWebBrowserForm.pas unit (from the present "WebView4Delphi Sources.zip" file. This is also the browser reference which must 
+be passed to any other library function inorder to identify the targetted browser. 	
+
+Function to enable a WebBrowser to receive and send text messages from and to a browser webpage
+=============================================================================================== 
+
+Syntax:
+  res := SetBrowserMessageCommunication(WFB,Allow,SndBufferHandle,RcvBufferHandle); 
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Allow  = flag to allow or not the message functionalities  0 = inhibited    <>0 = activated
+				SndBufferHandle = handle of a LIST object containing the text to send to the browser page
+				RcvBufferHandle = handle of a LIST object receiving the text sent by the browser page
+    return value:  -1 if error  0 if ok 
+
+This function has no visible effect. It's sole use is the managment of the message system parameter.
+Independently from the Allow parameter, if any of the buffer handle parameters is zero, the corresponding 
+message features are disabled. 
+
+Both list object can be hidden. Both list objects should have an OnChange event associated with them.
+
+For the SndBuffer, the OnChange event will be triggered by the WebPage on reception of the message.
+This will be done sending a confirmation message to the SndBuffer. The main program can then erase this buffer.
+
+For the RcvBuffer, the OnChange event will be triggered for any message sent to this buffer by the WebSite.
+The main program should always handle the item 0 of the List object used as RcsBuffer, then delete it, and repeat
+this until the RcvBuffer is empty. Thus, the RcvBuffer acs as a FIFO stack.
+
+Function to send a message to the browser
+=========================================
+
+Syntax:
+  res := SendMessageToBrowser(WBF,MessageID);
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            MessageID  = identificator of the message
+				               This can be:
+							      @StringVariable
+								  @stringVariable[0]
+								  ListObject.Handle
+								  Memobject.Handle
+    return value:  -1 if error  0 if ok 
+
+This function sends a text message to a browser window. This can be a single line message, or even a multi-line text
+such as a List or Memo object content. The message will be received within the browser page by a JavaScript event.
+It is then the responsability of the Java Script code to handle the messages.
+
+Function to receive a message from the browser
+==============================================
+
+There is no such explicit function. The Library is just listening for incoming messages, but the initialive lies 
+on the browser's side, through specialized JavaScript code. One can imagine the main program sending a quey message
+to the browser, hoping that on the browser'side, a JavaScrpt code is provided to handle the request and act as reuired.
+
+Function to navigate to a URL
+=============================
+
+Syntax:
+  res := BrowserNavigate(WBF,UrlID);
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the scrollbar managment   0 = hide the scrollbars    <>0 = show the scrollbars
+	            UrlID  = identificator of the URL string
+				               This can be:
+							      @StringVariable
+								  @stringVariable[0]
+								  ListObject.Handle
+								  Memobject.Handle
+    return value:  -1 if error  0 if ok 
+	
+	This function lets the browser navigate to the specified URL. This includes obviously normal internet URL,
+	but may be used also to load files from local disks. In this case, the full path name tu the file must be
+	prefixed with the "file:///" protocol specification.
+
+Function to manage the browser's internal scroll bars
+=====================================================
+
+Syntax:
+  res := SetBrowserScrollBars(WBF,Action);
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the scrollbar managment   0 = hide the scrollbars    <>0 = show the scrollbars
+    return value:  -1 if error  0 if ok 
+
+This function acts on the browser's internal scrollbars. Sometimes, it is necessary to hide those bars and 
+manage the scrolling programmatically. For that purpose, this function can be used to hide or show the scrollbars.
+
+Function do execute a JavaScript
+================================
+
+Syntax:
+  res := ExecuteBrowserScript(WBF,ScriptID);
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Value = script string identifier
+				               This can be:
+							      @StringVariable
+								  @stringVariable[0]
+								  ListObject.Handle
+								  Memobject.Handle
+    return value:  -1 if error  0 if ok 
+	
+This function launches the execution of the JavaScript snippet passed as string parameter, within the browser's context.
+
+Function to manage the browser's address panel
+==============================================
+
+Syntax:
+  res := SetBrowserAdddressPanel(WBF,Action);
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the address panel managment   0 = hide the panel    <>0 = show the panel
+    return value:  -1 if error  0 if ok 
+
+This function acts on the browser's internal adresss panel showing an URL field and a "Go" button. 
+Sometimes, it is necessary to hide those parts and manage the URL navigation programmatically. 
+For that purpose, this function can be used to hide or show the Address Panel.
+
+
+Note:
+  This documentation reflects the actual implementtion level on March 11th, 2026.
