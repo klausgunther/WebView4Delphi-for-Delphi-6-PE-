@@ -106,6 +106,10 @@ end;
 procedure TWebBrowserForm.WVBrowser1DocumentTitleChanged(Sender: TObject);
 begin
   Caption := 'SimpleBrowser - ' + WVBrowser1.DocumentTitle;
+  if not WVBrowser1.IsInitialized then begin
+    WVBrowser1.IsInitialized := true;
+    WVBrowser1.OpenInSameTab := true;
+  end;
 end;
 
 procedure TWebBrowserForm.WVBrowser1InitializationError(Sender: TObject;

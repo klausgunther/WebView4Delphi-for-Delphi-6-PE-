@@ -32,6 +32,12 @@ type
       // the SndMessageBuffer will be erased on send completion. So the calling program will be noticed.
       // a new message will be added to the RcvMessageBuffer. So the calling program will be noticed.
       // the calling program must allways handle the element [0] first, then delete it, until list is empty.
+      //
+      // Special options:
+      // say "browser is initialized"
+      fIsInitialized: boolean;
+      // open all navigation requests in the same browser tab
+      fOpenInSameTab: boolean;
     // **Klaus end
 
     protected
@@ -48,6 +54,9 @@ type
         const aWebView: ICoreWebView2;
         const aArgs: ICoreWebView2WebMessageReceivedEventArgs);
       procedure SetMessageReceiver;
+      procedure NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;    // **Klaus
+        const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
+      procedure SetNewWindowRequested(aAction: boolean);
 
     published
       property BrowserExecPath;
@@ -166,6 +175,8 @@ type
 
       property SndMessageBuffer: HWND read fSndMessageBuffer write fSndMessageBuffer;       // **Klaus
       property RcvMessageBuffer: HWND read fRcvMessageBuffer write fRcvMessageBuffer;       // **Klaus
+      property IsInitialized: boolean read fIsInitialized write fIsInitialized;             // **Klaus
+      property OpenInSameTab: boolean read fOpenInSameTab write fOpenInSameTab;             // **Klaus
   end;
 
 {$IFDEF FPC}
@@ -178,7 +189,23 @@ implementation
 const
   CUSTOM_SHARED_BUFFER_SIZE = 1024;
 
-procedure AppendStringToTLisBox(s: string; adest: HWND);
+{procedure TWVBrowser.NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;
+      const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
+var
+  TempArgs : TCoreWebView2NewWindowRequestedEventArgs;
+begin
+showmessage('try interception');
+  // use this event to block a new window for this request.
+  // instead, use a Navigate request inside the same tab.
+//  if not OpenInSameTab then exit;                    // is the option not selected ?
+  TempArgs := TCoreWebView2NewWindowRequestedEventArgs.Create(aArgs);
+  TempArgs.Handled := true;                          // block the New window request
+  TWVBrowser(Sender).Navigate(TempArgs.URI);         // navigate within the current tab
+ showmessage('intercepted '+TempArgs.URI);
+  TempArgs.Free;
+end;    }
+
+procedure AppendStringToTListBox(s: string; adest: HWND);
 var
   s1, s2: string;
   p: integer;
@@ -205,7 +232,7 @@ var
 begin
   TempArgs := TCoreWebView2WebMessageReceivedEventArgs.Create(aArgs);
   TempMsg  := TempArgs.WebMessageAsString;
-  AppendStringToTLisBox(TempMsg,TWVBrowser(Sender).RcvMessageBuffer);
+  AppendStringToTListBox(TempMsg,TWVBrowser(Sender).RcvMessageBuffer);
   TempArgs.Free;
 end;
 
@@ -214,6 +241,30 @@ begin
   if WebMessageEnabled then OnWebMessageReceived := WebMessageReceived
                        else OnWebMessageReceived := nil;
 end;
+
+// **Klaus addon begin
+procedure TWVBrowser.NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;
+      const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
+var
+  TempArgs : TCoreWebView2NewWindowRequestedEventArgs;
+begin
+  // use this event to block a new window for this request.
+  // instead, use a Navigate request inside the same tab.
+//showmessage('detected');
+  if not OpenInSameTab then exit;                    // is the option not selected ?
+  TempArgs := TCoreWebView2NewWindowRequestedEventArgs.Create(aArgs);
+  TempArgs.Handled := true;                          // block the New window request
+  TWVBrowser(Sender).Navigate(TempArgs.URI);         // navigate within the current tab
+//showmessage('intercepted');
+  TempArgs.Free;
+end;
+
+procedure TWVBrowser.SetNewWindowRequested(aAction: boolean);
+begin
+  if aAction then OnNewWindowRequested := NewWindowRequested
+             else OnNewWindowRequested := nil;
+end;
+// **Klaus addon end
 
 function TWVBrowser.GetParentForm : TCustomForm;
 var
@@ -313,7 +364,6 @@ var
   TempForm : TCustomForm;
 begin
   TempForm := GetParentForm;
-
   if (TempForm <> nil) then
     TempForm.Top := min(max(y, max(screen.DesktopTop, 0)), screen.DesktopHeight - TempForm.Height);
 end;
