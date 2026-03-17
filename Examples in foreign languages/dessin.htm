@@ -1,0 +1,828 @@
+<html>
+<body>
+  <input type="hidden" ID="msgtext" value="nothing"><!-- invisible element used by the sendMessageToHostApp function -->
+  <input type="hidden" ID="ZoomFactor" value="1000"><!-- invisible element used by messages for click interception -->
+  <script src="WebView_Klaus.js"></script>
+<svg id="mysvg" width="1000" viewBox="0 0 1000 275" preserveAspectRatio="xMinYMin meet" >
+  <rect width="40000" height="275" x="0" y="0" rx="0" ry="0" fill="lightgreen" style="stroke:black;stroke-width:3" />
+  <! -- Ligne délimitant les titres -->
+  <line x1="0" y1="25" x2="40000" y2="25" style="stroke:black;stroke-width:2" />
+  <! -- séparateurs verticaux -->
+  <line x1="100" y1="0" x2="100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="200" y1="0" x2="200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="300" y1="0" x2="300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="400" y1="0" x2="400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="500" y1="0" x2="500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="600" y1="0" x2="600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="700" y1="0" x2="700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="800" y1="0" x2="800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="900" y1="0" x2="900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1000" y1="0" x2="1000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1100" y1="0" x2="1100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1200" y1="0" x2="1200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1300" y1="0" x2="1300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1400" y1="0" x2="1400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1500" y1="0" x2="1500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1600" y1="0" x2="1600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1700" y1="0" x2="1700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1800" y1="0" x2="1800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="1900" y1="0" x2="1900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2000" y1="0" x2="2000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2100" y1="0" x2="2100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2200" y1="0" x2="2200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2300" y1="0" x2="2300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2400" y1="0" x2="2400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2500" y1="0" x2="2500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2600" y1="0" x2="2600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2700" y1="0" x2="2700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2800" y1="0" x2="2800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="2900" y1="0" x2="2900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3000" y1="0" x2="3000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3100" y1="0" x2="3100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3200" y1="0" x2="3200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3300" y1="0" x2="3300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3400" y1="0" x2="3400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3500" y1="0" x2="3500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3600" y1="0" x2="3600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3700" y1="0" x2="3700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3800" y1="0" x2="3800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="3900" y1="0" x2="3900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4000" y1="0" x2="4000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4100" y1="0" x2="4100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4200" y1="0" x2="4200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4300" y1="0" x2="4300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4400" y1="0" x2="4400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4500" y1="0" x2="4500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4600" y1="0" x2="4600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4700" y1="0" x2="4700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4800" y1="0" x2="4800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="4900" y1="0" x2="4900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5000" y1="0" x2="5000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5100" y1="0" x2="5100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5200" y1="0" x2="5200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5300" y1="0" x2="5300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5400" y1="0" x2="5400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5500" y1="0" x2="5500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5600" y1="0" x2="5600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5700" y1="0" x2="5700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5800" y1="0" x2="5800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="5900" y1="0" x2="5900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6000" y1="0" x2="6000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6100" y1="0" x2="6100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6200" y1="0" x2="6200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6300" y1="0" x2="6300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6400" y1="0" x2="6400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6500" y1="0" x2="6500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6600" y1="0" x2="6600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6700" y1="0" x2="6700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6800" y1="0" x2="6800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="6900" y1="0" x2="6900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7000" y1="0" x2="7000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7100" y1="0" x2="7100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7200" y1="0" x2="7200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7300" y1="0" x2="7300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7400" y1="0" x2="7400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7500" y1="0" x2="7500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7600" y1="0" x2="7600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7700" y1="0" x2="7700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7800" y1="0" x2="7800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="7900" y1="0" x2="7900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8000" y1="0" x2="8000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8100" y1="0" x2="8100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8200" y1="0" x2="8200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8300" y1="0" x2="8300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8400" y1="0" x2="8400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8500" y1="0" x2="8500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8600" y1="0" x2="8600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8700" y1="0" x2="8700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8800" y1="0" x2="8800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="8900" y1="0" x2="8900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9000" y1="0" x2="9000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9100" y1="0" x2="9100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9200" y1="0" x2="9200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9300" y1="0" x2="9300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9400" y1="0" x2="9400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9500" y1="0" x2="9500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9600" y1="0" x2="9600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9700" y1="0" x2="9700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9800" y1="0" x2="9800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="9900" y1="0" x2="9900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10000" y1="0" x2="10000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10100" y1="0" x2="10100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10200" y1="0" x2="10200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10300" y1="0" x2="10300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10400" y1="0" x2="10400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10500" y1="0" x2="10500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10600" y1="0" x2="10600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10700" y1="0" x2="10700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10800" y1="0" x2="10800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="10900" y1="0" x2="10900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11000" y1="0" x2="11000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11100" y1="0" x2="11100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11200" y1="0" x2="11200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11300" y1="0" x2="11300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11400" y1="0" x2="11400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11500" y1="0" x2="11500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11600" y1="0" x2="11600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11700" y1="0" x2="11700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11800" y1="0" x2="11800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="11900" y1="0" x2="11900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12000" y1="0" x2="12000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12100" y1="0" x2="12100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12200" y1="0" x2="12200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12300" y1="0" x2="12300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12400" y1="0" x2="12400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12500" y1="0" x2="12500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12600" y1="0" x2="12600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12700" y1="0" x2="12700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12800" y1="0" x2="12800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="12900" y1="0" x2="12900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13000" y1="0" x2="13000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13100" y1="0" x2="13100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13200" y1="0" x2="13200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13300" y1="0" x2="13300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13400" y1="0" x2="13400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13500" y1="0" x2="13500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13600" y1="0" x2="13600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13700" y1="0" x2="13700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13800" y1="0" x2="13800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="13900" y1="0" x2="13900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14000" y1="0" x2="14000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14100" y1="0" x2="14100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14200" y1="0" x2="14200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14300" y1="0" x2="14300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14400" y1="0" x2="14400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14500" y1="0" x2="14500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14600" y1="0" x2="14600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14700" y1="0" x2="14700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14800" y1="0" x2="14800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="14900" y1="0" x2="14900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15000" y1="0" x2="15000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15100" y1="0" x2="15100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15200" y1="0" x2="15200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15300" y1="0" x2="15300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15400" y1="0" x2="15400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15500" y1="0" x2="15500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15600" y1="0" x2="15600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15700" y1="0" x2="15700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15800" y1="0" x2="15800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="15900" y1="0" x2="15900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16000" y1="0" x2="16000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16100" y1="0" x2="16100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16200" y1="0" x2="16200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16300" y1="0" x2="16300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16400" y1="0" x2="16400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16500" y1="0" x2="16500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16600" y1="0" x2="16600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16700" y1="0" x2="16700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16800" y1="0" x2="16800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="16900" y1="0" x2="16900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17000" y1="0" x2="17000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17100" y1="0" x2="17100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17200" y1="0" x2="17200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17300" y1="0" x2="17300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17400" y1="0" x2="17400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17500" y1="0" x2="17500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17600" y1="0" x2="17600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17700" y1="0" x2="17700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17800" y1="0" x2="17800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="17900" y1="0" x2="17900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18000" y1="0" x2="18000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18100" y1="0" x2="18100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18200" y1="0" x2="18200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18300" y1="0" x2="18300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18400" y1="0" x2="18400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18500" y1="0" x2="18500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18600" y1="0" x2="18600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18700" y1="0" x2="18700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18800" y1="0" x2="18800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="18900" y1="0" x2="18900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19000" y1="0" x2="19000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19100" y1="0" x2="19100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19200" y1="0" x2="19200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19300" y1="0" x2="19300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19400" y1="0" x2="19400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19500" y1="0" x2="19500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19600" y1="0" x2="19600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19700" y1="0" x2="19700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19800" y1="0" x2="19800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="19900" y1="0" x2="19900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20000" y1="0" x2="20000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20100" y1="0" x2="20100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20200" y1="0" x2="20200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20300" y1="0" x2="20300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20400" y1="0" x2="20400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20500" y1="0" x2="20500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20600" y1="0" x2="20600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20700" y1="0" x2="20700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20800" y1="0" x2="20800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="20900" y1="0" x2="20900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21000" y1="0" x2="21000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21100" y1="0" x2="21100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21200" y1="0" x2="21200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21300" y1="0" x2="21300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21400" y1="0" x2="21400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21500" y1="0" x2="21500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21600" y1="0" x2="21600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21700" y1="0" x2="21700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21800" y1="0" x2="21800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="21900" y1="0" x2="21900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22000" y1="0" x2="22000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22100" y1="0" x2="22100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22200" y1="0" x2="22200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22300" y1="0" x2="22300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22400" y1="0" x2="22400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22500" y1="0" x2="22500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22600" y1="0" x2="22600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22700" y1="0" x2="22700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22800" y1="0" x2="22800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="22900" y1="0" x2="22900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23000" y1="0" x2="23000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23100" y1="0" x2="23100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23200" y1="0" x2="23200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23300" y1="0" x2="23300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23400" y1="0" x2="23400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23500" y1="0" x2="23500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23600" y1="0" x2="23600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23700" y1="0" x2="23700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23800" y1="0" x2="23800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="23900" y1="0" x2="23900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24000" y1="0" x2="24000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24100" y1="0" x2="24100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24200" y1="0" x2="24200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24300" y1="0" x2="24300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24400" y1="0" x2="24400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24500" y1="0" x2="24500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24600" y1="0" x2="24600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24700" y1="0" x2="24700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24800" y1="0" x2="24800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="24900" y1="0" x2="24900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25000" y1="0" x2="25000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25100" y1="0" x2="25100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25200" y1="0" x2="25200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25300" y1="0" x2="25300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25400" y1="0" x2="25400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25500" y1="0" x2="25500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25600" y1="0" x2="25600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25700" y1="0" x2="25700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25800" y1="0" x2="25800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="25900" y1="0" x2="25900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26000" y1="0" x2="26000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26100" y1="0" x2="26100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26200" y1="0" x2="26200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26300" y1="0" x2="26300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26400" y1="0" x2="26400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26500" y1="0" x2="26500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26600" y1="0" x2="26600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26700" y1="0" x2="26700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26800" y1="0" x2="26800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="26900" y1="0" x2="26900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27000" y1="0" x2="27000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27100" y1="0" x2="27100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27200" y1="0" x2="27200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27300" y1="0" x2="27300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27400" y1="0" x2="27400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27500" y1="0" x2="27500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27600" y1="0" x2="27600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27700" y1="0" x2="27700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27800" y1="0" x2="27800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="27900" y1="0" x2="27900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28000" y1="0" x2="28000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28100" y1="0" x2="28100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28200" y1="0" x2="28200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28300" y1="0" x2="28300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28400" y1="0" x2="28400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28500" y1="0" x2="28500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28600" y1="0" x2="28600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28700" y1="0" x2="28700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28800" y1="0" x2="28800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="28900" y1="0" x2="28900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29000" y1="0" x2="29000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29100" y1="0" x2="29100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29200" y1="0" x2="29200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29300" y1="0" x2="29300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29400" y1="0" x2="29400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29500" y1="0" x2="29500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29600" y1="0" x2="29600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29700" y1="0" x2="29700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29800" y1="0" x2="29800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="29900" y1="0" x2="29900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30000" y1="0" x2="30000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30100" y1="0" x2="30100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30200" y1="0" x2="30200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30300" y1="0" x2="30300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30400" y1="0" x2="30400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30500" y1="0" x2="30500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30600" y1="0" x2="30600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30700" y1="0" x2="30700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30800" y1="0" x2="30800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="30900" y1="0" x2="30900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31000" y1="0" x2="31000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31100" y1="0" x2="31100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31200" y1="0" x2="31200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31300" y1="0" x2="31300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31400" y1="0" x2="31400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31500" y1="0" x2="31500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31600" y1="0" x2="31600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31700" y1="0" x2="31700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31800" y1="0" x2="31800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="31900" y1="0" x2="31900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32000" y1="0" x2="32000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32100" y1="0" x2="32100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32200" y1="0" x2="32200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32300" y1="0" x2="32300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32400" y1="0" x2="32400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32500" y1="0" x2="32500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32600" y1="0" x2="32600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32700" y1="0" x2="32700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32800" y1="0" x2="32800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="32900" y1="0" x2="32900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33000" y1="0" x2="33000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33100" y1="0" x2="33100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33200" y1="0" x2="33200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33300" y1="0" x2="33300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33400" y1="0" x2="33400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33500" y1="0" x2="33500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33600" y1="0" x2="33600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33700" y1="0" x2="33700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33800" y1="0" x2="33800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="33900" y1="0" x2="33900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34000" y1="0" x2="34000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34100" y1="0" x2="34100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34200" y1="0" x2="34200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34300" y1="0" x2="34300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34400" y1="0" x2="34400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34500" y1="0" x2="34500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34600" y1="0" x2="34600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34700" y1="0" x2="34700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34800" y1="0" x2="34800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="34900" y1="0" x2="34900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35000" y1="0" x2="35000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35100" y1="0" x2="35100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35200" y1="0" x2="35200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35300" y1="0" x2="35300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35400" y1="0" x2="35400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35500" y1="0" x2="35500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35600" y1="0" x2="35600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35700" y1="0" x2="35700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35800" y1="0" x2="35800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="35900" y1="0" x2="35900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36000" y1="0" x2="36000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36100" y1="0" x2="36100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36200" y1="0" x2="36200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36300" y1="0" x2="36300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36400" y1="0" x2="36400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36500" y1="0" x2="36500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36600" y1="0" x2="36600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36700" y1="0" x2="36700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36800" y1="0" x2="36800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="36900" y1="0" x2="36900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37000" y1="0" x2="37000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37100" y1="0" x2="37100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37200" y1="0" x2="37200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37300" y1="0" x2="37300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37400" y1="0" x2="37400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37500" y1="0" x2="37500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37600" y1="0" x2="37600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37700" y1="0" x2="37700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37800" y1="0" x2="37800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="37900" y1="0" x2="37900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38000" y1="0" x2="38000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38100" y1="0" x2="38100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38200" y1="0" x2="38200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38300" y1="0" x2="38300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38400" y1="0" x2="38400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38500" y1="0" x2="38500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38600" y1="0" x2="38600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38700" y1="0" x2="38700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38800" y1="0" x2="38800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="38900" y1="0" x2="38900" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39000" y1="0" x2="39000" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39100" y1="0" x2="39100" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39200" y1="0" x2="39200" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39300" y1="0" x2="39300" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39400" y1="0" x2="39400" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39500" y1="0" x2="39500" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39600" y1="0" x2="39600" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39700" y1="0" x2="39700" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39800" y1="0" x2="39800" y2="275" style="stroke:blue;stroke-width:1" />
+  <line x1="39900" y1="0" x2="39900" y2="275" style="stroke:blue;stroke-width:1" />
+  <! -- séparateurs horizontaux -->
+  <line x1="0" y1="50" x2="40000" y2="50" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="75" x2="40000" y2="75" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="100" x2="40000" y2="100" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="125" x2="40000" y2="125" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="150" x2="40000" y2="150" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="175" x2="40000" y2="175" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="200" x2="40000" y2="200" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="225" x2="40000" y2="225" style="stroke:blue;stroke-width:1" />
+  <line x1="0" y1="250" x2="40000" y2="250" style="stroke:blue;stroke-width:1" />
+  <! -- titres des colonnes -->
+  <text x="40" y="23" fill="red" font-size="25">0</text>
+  <text x="140" y="23" fill="red" font-size="25">1</text>
+  <text x="240" y="23" fill="red" font-size="25">2</text>
+  <text x="340" y="23" fill="red" font-size="25">3</text>
+  <text x="440" y="23" fill="red" font-size="25">4</text>
+  <text x="540" y="23" fill="red" font-size="25">5</text>
+  <text x="640" y="23" fill="red" font-size="25">6</text>
+  <text x="740" y="23" fill="red" font-size="25">7</text>
+  <text x="840" y="23" fill="red" font-size="25">8</text>
+  <text x="940" y="23" fill="red" font-size="25">9</text>
+  <text x="1040" y="23" fill="red" font-size="25">10</text>
+  <text x="1140" y="23" fill="red" font-size="25">11</text>
+  <text x="1240" y="23" fill="red" font-size="25">12</text>
+  <text x="1340" y="23" fill="red" font-size="25">13</text>
+  <text x="1440" y="23" fill="red" font-size="25">14</text>
+  <text x="1540" y="23" fill="red" font-size="25">15</text>
+  <text x="1640" y="23" fill="red" font-size="25">16</text>
+  <text x="1740" y="23" fill="red" font-size="25">17</text>
+  <text x="1840" y="23" fill="red" font-size="25">18</text>
+  <text x="1940" y="23" fill="red" font-size="25">19</text>
+  <text x="2040" y="23" fill="red" font-size="25">20</text>
+  <text x="2140" y="23" fill="red" font-size="25">21</text>
+  <text x="2240" y="23" fill="red" font-size="25">22</text>
+  <text x="2340" y="23" fill="red" font-size="25">23</text>
+  <text x="2440" y="23" fill="red" font-size="25">24</text>
+  <text x="2540" y="23" fill="red" font-size="25">25</text>
+  <text x="2640" y="23" fill="red" font-size="25">26</text>
+  <text x="2740" y="23" fill="red" font-size="25">27</text>
+  <text x="2840" y="23" fill="red" font-size="25">28</text>
+  <text x="2940" y="23" fill="red" font-size="25">29</text>
+  <text x="3040" y="23" fill="red" font-size="25">30</text>
+  <text x="3140" y="23" fill="red" font-size="25">31</text>
+  <text x="3240" y="23" fill="red" font-size="25">32</text>
+  <text x="3340" y="23" fill="red" font-size="25">33</text>
+  <text x="3440" y="23" fill="red" font-size="25">34</text>
+  <text x="3540" y="23" fill="red" font-size="25">35</text>
+  <text x="3640" y="23" fill="red" font-size="25">36</text>
+  <text x="3740" y="23" fill="red" font-size="25">37</text>
+  <text x="3840" y="23" fill="red" font-size="25">38</text>
+  <text x="3940" y="23" fill="red" font-size="25">39</text>
+  <text x="4040" y="23" fill="red" font-size="25">40</text>
+  <text x="4140" y="23" fill="red" font-size="25">41</text>
+  <text x="4240" y="23" fill="red" font-size="25">42</text>
+  <text x="4340" y="23" fill="red" font-size="25">43</text>
+  <text x="4440" y="23" fill="red" font-size="25">44</text>
+  <text x="4540" y="23" fill="red" font-size="25">45</text>
+  <text x="4640" y="23" fill="red" font-size="25">46</text>
+  <text x="4740" y="23" fill="red" font-size="25">47</text>
+  <text x="4840" y="23" fill="red" font-size="25">48</text>
+  <text x="4940" y="23" fill="red" font-size="25">49</text>
+  <text x="5040" y="23" fill="red" font-size="25">50</text>
+  <text x="5140" y="23" fill="red" font-size="25">51</text>
+  <text x="5240" y="23" fill="red" font-size="25">52</text>
+  <text x="5340" y="23" fill="red" font-size="25">53</text>
+  <text x="5440" y="23" fill="red" font-size="25">54</text>
+  <text x="5540" y="23" fill="red" font-size="25">55</text>
+  <text x="5640" y="23" fill="red" font-size="25">56</text>
+  <text x="5740" y="23" fill="red" font-size="25">57</text>
+  <text x="5840" y="23" fill="red" font-size="25">58</text>
+  <text x="5940" y="23" fill="red" font-size="25">59</text>
+  <text x="6040" y="23" fill="red" font-size="25">60</text>
+  <text x="6140" y="23" fill="red" font-size="25">61</text>
+  <text x="6240" y="23" fill="red" font-size="25">62</text>
+  <text x="6340" y="23" fill="red" font-size="25">63</text>
+  <text x="6440" y="23" fill="red" font-size="25">64</text>
+  <text x="6540" y="23" fill="red" font-size="25">65</text>
+  <text x="6640" y="23" fill="red" font-size="25">66</text>
+  <text x="6740" y="23" fill="red" font-size="25">67</text>
+  <text x="6840" y="23" fill="red" font-size="25">68</text>
+  <text x="6940" y="23" fill="red" font-size="25">69</text>
+  <text x="7040" y="23" fill="red" font-size="25">70</text>
+  <text x="7140" y="23" fill="red" font-size="25">71</text>
+  <text x="7240" y="23" fill="red" font-size="25">72</text>
+  <text x="7340" y="23" fill="red" font-size="25">73</text>
+  <text x="7440" y="23" fill="red" font-size="25">74</text>
+  <text x="7540" y="23" fill="red" font-size="25">75</text>
+  <text x="7640" y="23" fill="red" font-size="25">76</text>
+  <text x="7740" y="23" fill="red" font-size="25">77</text>
+  <text x="7840" y="23" fill="red" font-size="25">78</text>
+  <text x="7940" y="23" fill="red" font-size="25">79</text>
+  <text x="8040" y="23" fill="red" font-size="25">80</text>
+  <text x="8140" y="23" fill="red" font-size="25">81</text>
+  <text x="8240" y="23" fill="red" font-size="25">82</text>
+  <text x="8340" y="23" fill="red" font-size="25">83</text>
+  <text x="8440" y="23" fill="red" font-size="25">84</text>
+  <text x="8540" y="23" fill="red" font-size="25">85</text>
+  <text x="8640" y="23" fill="red" font-size="25">86</text>
+  <text x="8740" y="23" fill="red" font-size="25">87</text>
+  <text x="8840" y="23" fill="red" font-size="25">88</text>
+  <text x="8940" y="23" fill="red" font-size="25">89</text>
+  <text x="9040" y="23" fill="red" font-size="25">90</text>
+  <text x="9140" y="23" fill="red" font-size="25">91</text>
+  <text x="9240" y="23" fill="red" font-size="25">92</text>
+  <text x="9340" y="23" fill="red" font-size="25">93</text>
+  <text x="9440" y="23" fill="red" font-size="25">94</text>
+  <text x="9540" y="23" fill="red" font-size="25">95</text>
+  <text x="9640" y="23" fill="red" font-size="25">96</text>
+  <text x="9740" y="23" fill="red" font-size="25">97</text>
+  <text x="9840" y="23" fill="red" font-size="25">98</text>
+  <text x="9940" y="23" fill="red" font-size="25">99</text>
+  <text x="10040" y="23" fill="red" font-size="25">100</text>
+  <text x="10140" y="23" fill="red" font-size="25">101</text>
+  <text x="10240" y="23" fill="red" font-size="25">102</text>
+  <text x="10340" y="23" fill="red" font-size="25">103</text>
+  <text x="10440" y="23" fill="red" font-size="25">104</text>
+  <text x="10540" y="23" fill="red" font-size="25">105</text>
+  <text x="10640" y="23" fill="red" font-size="25">106</text>
+  <text x="10740" y="23" fill="red" font-size="25">107</text>
+  <text x="10840" y="23" fill="red" font-size="25">108</text>
+  <text x="10940" y="23" fill="red" font-size="25">109</text>
+  <text x="11040" y="23" fill="red" font-size="25">110</text>
+  <text x="11140" y="23" fill="red" font-size="25">111</text>
+  <text x="11240" y="23" fill="red" font-size="25">112</text>
+  <text x="11340" y="23" fill="red" font-size="25">113</text>
+  <text x="11440" y="23" fill="red" font-size="25">114</text>
+  <text x="11540" y="23" fill="red" font-size="25">115</text>
+  <text x="11640" y="23" fill="red" font-size="25">116</text>
+  <text x="11740" y="23" fill="red" font-size="25">117</text>
+  <text x="11840" y="23" fill="red" font-size="25">118</text>
+  <text x="11940" y="23" fill="red" font-size="25">119</text>
+  <text x="12040" y="23" fill="red" font-size="25">120</text>
+  <text x="12140" y="23" fill="red" font-size="25">121</text>
+  <text x="12240" y="23" fill="red" font-size="25">122</text>
+  <text x="12340" y="23" fill="red" font-size="25">123</text>
+  <text x="12440" y="23" fill="red" font-size="25">124</text>
+  <text x="12540" y="23" fill="red" font-size="25">125</text>
+  <text x="12640" y="23" fill="red" font-size="25">126</text>
+  <text x="12740" y="23" fill="red" font-size="25">127</text>
+  <text x="12840" y="23" fill="red" font-size="25">128</text>
+  <text x="12940" y="23" fill="red" font-size="25">129</text>
+  <text x="13040" y="23" fill="red" font-size="25">130</text>
+  <text x="13140" y="23" fill="red" font-size="25">131</text>
+  <text x="13240" y="23" fill="red" font-size="25">132</text>
+  <text x="13340" y="23" fill="red" font-size="25">133</text>
+  <text x="13440" y="23" fill="red" font-size="25">134</text>
+  <text x="13540" y="23" fill="red" font-size="25">135</text>
+  <text x="13640" y="23" fill="red" font-size="25">136</text>
+  <text x="13740" y="23" fill="red" font-size="25">137</text>
+  <text x="13840" y="23" fill="red" font-size="25">138</text>
+  <text x="13940" y="23" fill="red" font-size="25">139</text>
+  <text x="14040" y="23" fill="red" font-size="25">140</text>
+  <text x="14140" y="23" fill="red" font-size="25">141</text>
+  <text x="14240" y="23" fill="red" font-size="25">142</text>
+  <text x="14340" y="23" fill="red" font-size="25">143</text>
+  <text x="14440" y="23" fill="red" font-size="25">144</text>
+  <text x="14540" y="23" fill="red" font-size="25">145</text>
+  <text x="14640" y="23" fill="red" font-size="25">146</text>
+  <text x="14740" y="23" fill="red" font-size="25">147</text>
+  <text x="14840" y="23" fill="red" font-size="25">148</text>
+  <text x="14940" y="23" fill="red" font-size="25">149</text>
+  <text x="15040" y="23" fill="red" font-size="25">150</text>
+  <text x="15140" y="23" fill="red" font-size="25">151</text>
+  <text x="15240" y="23" fill="red" font-size="25">152</text>
+  <text x="15340" y="23" fill="red" font-size="25">153</text>
+  <text x="15440" y="23" fill="red" font-size="25">154</text>
+  <text x="15540" y="23" fill="red" font-size="25">155</text>
+  <text x="15640" y="23" fill="red" font-size="25">156</text>
+  <text x="15740" y="23" fill="red" font-size="25">157</text>
+  <text x="15840" y="23" fill="red" font-size="25">158</text>
+  <text x="15940" y="23" fill="red" font-size="25">159</text>
+  <text x="16040" y="23" fill="red" font-size="25">160</text>
+  <text x="16140" y="23" fill="red" font-size="25">161</text>
+  <text x="16240" y="23" fill="red" font-size="25">162</text>
+  <text x="16340" y="23" fill="red" font-size="25">163</text>
+  <text x="16440" y="23" fill="red" font-size="25">164</text>
+  <text x="16540" y="23" fill="red" font-size="25">165</text>
+  <text x="16640" y="23" fill="red" font-size="25">166</text>
+  <text x="16740" y="23" fill="red" font-size="25">167</text>
+  <text x="16840" y="23" fill="red" font-size="25">168</text>
+  <text x="16940" y="23" fill="red" font-size="25">169</text>
+  <text x="17040" y="23" fill="red" font-size="25">170</text>
+  <text x="17140" y="23" fill="red" font-size="25">171</text>
+  <text x="17240" y="23" fill="red" font-size="25">172</text>
+  <text x="17340" y="23" fill="red" font-size="25">173</text>
+  <text x="17440" y="23" fill="red" font-size="25">174</text>
+  <text x="17540" y="23" fill="red" font-size="25">175</text>
+  <text x="17640" y="23" fill="red" font-size="25">176</text>
+  <text x="17740" y="23" fill="red" font-size="25">177</text>
+  <text x="17840" y="23" fill="red" font-size="25">178</text>
+  <text x="17940" y="23" fill="red" font-size="25">179</text>
+  <text x="18040" y="23" fill="red" font-size="25">180</text>
+  <text x="18140" y="23" fill="red" font-size="25">181</text>
+  <text x="18240" y="23" fill="red" font-size="25">182</text>
+  <text x="18340" y="23" fill="red" font-size="25">183</text>
+  <text x="18440" y="23" fill="red" font-size="25">184</text>
+  <text x="18540" y="23" fill="red" font-size="25">185</text>
+  <text x="18640" y="23" fill="red" font-size="25">186</text>
+  <text x="18740" y="23" fill="red" font-size="25">187</text>
+  <text x="18840" y="23" fill="red" font-size="25">188</text>
+  <text x="18940" y="23" fill="red" font-size="25">189</text>
+  <text x="19040" y="23" fill="red" font-size="25">190</text>
+  <text x="19140" y="23" fill="red" font-size="25">191</text>
+  <text x="19240" y="23" fill="red" font-size="25">192</text>
+  <text x="19340" y="23" fill="red" font-size="25">193</text>
+  <text x="19440" y="23" fill="red" font-size="25">194</text>
+  <text x="19540" y="23" fill="red" font-size="25">195</text>
+  <text x="19640" y="23" fill="red" font-size="25">196</text>
+  <text x="19740" y="23" fill="red" font-size="25">197</text>
+  <text x="19840" y="23" fill="red" font-size="25">198</text>
+  <text x="19940" y="23" fill="red" font-size="25">199</text>
+  <text x="20040" y="23" fill="red" font-size="25">200</text>
+  <text x="20140" y="23" fill="red" font-size="25">201</text>
+  <text x="20240" y="23" fill="red" font-size="25">202</text>
+  <text x="20340" y="23" fill="red" font-size="25">203</text>
+  <text x="20440" y="23" fill="red" font-size="25">204</text>
+  <text x="20540" y="23" fill="red" font-size="25">205</text>
+  <text x="20640" y="23" fill="red" font-size="25">206</text>
+  <text x="20740" y="23" fill="red" font-size="25">207</text>
+  <text x="20840" y="23" fill="red" font-size="25">208</text>
+  <text x="20940" y="23" fill="red" font-size="25">209</text>
+  <text x="21040" y="23" fill="red" font-size="25">210</text>
+  <text x="21140" y="23" fill="red" font-size="25">211</text>
+  <text x="21240" y="23" fill="red" font-size="25">212</text>
+  <text x="21340" y="23" fill="red" font-size="25">213</text>
+  <text x="21440" y="23" fill="red" font-size="25">214</text>
+  <text x="21540" y="23" fill="red" font-size="25">215</text>
+  <text x="21640" y="23" fill="red" font-size="25">216</text>
+  <text x="21740" y="23" fill="red" font-size="25">217</text>
+  <text x="21840" y="23" fill="red" font-size="25">218</text>
+  <text x="21940" y="23" fill="red" font-size="25">219</text>
+  <text x="22040" y="23" fill="red" font-size="25">220</text>
+  <text x="22140" y="23" fill="red" font-size="25">221</text>
+  <text x="22240" y="23" fill="red" font-size="25">222</text>
+  <text x="22340" y="23" fill="red" font-size="25">223</text>
+  <text x="22440" y="23" fill="red" font-size="25">224</text>
+  <text x="22540" y="23" fill="red" font-size="25">225</text>
+  <text x="22640" y="23" fill="red" font-size="25">226</text>
+  <text x="22740" y="23" fill="red" font-size="25">227</text>
+  <text x="22840" y="23" fill="red" font-size="25">228</text>
+  <text x="22940" y="23" fill="red" font-size="25">229</text>
+  <text x="23040" y="23" fill="red" font-size="25">230</text>
+  <text x="23140" y="23" fill="red" font-size="25">231</text>
+  <text x="23240" y="23" fill="red" font-size="25">232</text>
+  <text x="23340" y="23" fill="red" font-size="25">233</text>
+  <text x="23440" y="23" fill="red" font-size="25">234</text>
+  <text x="23540" y="23" fill="red" font-size="25">235</text>
+  <text x="23640" y="23" fill="red" font-size="25">236</text>
+  <text x="23740" y="23" fill="red" font-size="25">237</text>
+  <text x="23840" y="23" fill="red" font-size="25">238</text>
+  <text x="23940" y="23" fill="red" font-size="25">239</text>
+  <text x="24040" y="23" fill="red" font-size="25">240</text>
+  <text x="24140" y="23" fill="red" font-size="25">241</text>
+  <text x="24240" y="23" fill="red" font-size="25">242</text>
+  <text x="24340" y="23" fill="red" font-size="25">243</text>
+  <text x="24440" y="23" fill="red" font-size="25">244</text>
+  <text x="24540" y="23" fill="red" font-size="25">245</text>
+  <text x="24640" y="23" fill="red" font-size="25">246</text>
+  <text x="24740" y="23" fill="red" font-size="25">247</text>
+  <text x="24840" y="23" fill="red" font-size="25">248</text>
+  <text x="24940" y="23" fill="red" font-size="25">249</text>
+  <text x="25040" y="23" fill="red" font-size="25">250</text>
+  <text x="25140" y="23" fill="red" font-size="25">251</text>
+  <text x="25240" y="23" fill="red" font-size="25">252</text>
+  <text x="25340" y="23" fill="red" font-size="25">253</text>
+  <text x="25440" y="23" fill="red" font-size="25">254</text>
+  <text x="25540" y="23" fill="red" font-size="25">255</text>
+  <text x="25640" y="23" fill="red" font-size="25">256</text>
+  <text x="25740" y="23" fill="red" font-size="25">257</text>
+  <text x="25840" y="23" fill="red" font-size="25">258</text>
+  <text x="25940" y="23" fill="red" font-size="25">259</text>
+  <text x="26040" y="23" fill="red" font-size="25">260</text>
+  <text x="26140" y="23" fill="red" font-size="25">261</text>
+  <text x="26240" y="23" fill="red" font-size="25">262</text>
+  <text x="26340" y="23" fill="red" font-size="25">263</text>
+  <text x="26440" y="23" fill="red" font-size="25">264</text>
+  <text x="26540" y="23" fill="red" font-size="25">265</text>
+  <text x="26640" y="23" fill="red" font-size="25">266</text>
+  <text x="26740" y="23" fill="red" font-size="25">267</text>
+  <text x="26840" y="23" fill="red" font-size="25">268</text>
+  <text x="26940" y="23" fill="red" font-size="25">269</text>
+  <text x="27040" y="23" fill="red" font-size="25">270</text>
+  <text x="27140" y="23" fill="red" font-size="25">271</text>
+  <text x="27240" y="23" fill="red" font-size="25">272</text>
+  <text x="27340" y="23" fill="red" font-size="25">273</text>
+  <text x="27440" y="23" fill="red" font-size="25">274</text>
+  <text x="27540" y="23" fill="red" font-size="25">275</text>
+  <text x="27640" y="23" fill="red" font-size="25">276</text>
+  <text x="27740" y="23" fill="red" font-size="25">277</text>
+  <text x="27840" y="23" fill="red" font-size="25">278</text>
+  <text x="27940" y="23" fill="red" font-size="25">279</text>
+  <text x="28040" y="23" fill="red" font-size="25">280</text>
+  <text x="28140" y="23" fill="red" font-size="25">281</text>
+  <text x="28240" y="23" fill="red" font-size="25">282</text>
+  <text x="28340" y="23" fill="red" font-size="25">283</text>
+  <text x="28440" y="23" fill="red" font-size="25">284</text>
+  <text x="28540" y="23" fill="red" font-size="25">285</text>
+  <text x="28640" y="23" fill="red" font-size="25">286</text>
+  <text x="28740" y="23" fill="red" font-size="25">287</text>
+  <text x="28840" y="23" fill="red" font-size="25">288</text>
+  <text x="28940" y="23" fill="red" font-size="25">289</text>
+  <text x="29040" y="23" fill="red" font-size="25">290</text>
+  <text x="29140" y="23" fill="red" font-size="25">291</text>
+  <text x="29240" y="23" fill="red" font-size="25">292</text>
+  <text x="29340" y="23" fill="red" font-size="25">293</text>
+  <text x="29440" y="23" fill="red" font-size="25">294</text>
+  <text x="29540" y="23" fill="red" font-size="25">295</text>
+  <text x="29640" y="23" fill="red" font-size="25">296</text>
+  <text x="29740" y="23" fill="red" font-size="25">297</text>
+  <text x="29840" y="23" fill="red" font-size="25">298</text>
+  <text x="29940" y="23" fill="red" font-size="25">299</text>
+  <text x="30040" y="23" fill="red" font-size="25">300</text>
+  <text x="30140" y="23" fill="red" font-size="25">301</text>
+  <text x="30240" y="23" fill="red" font-size="25">302</text>
+  <text x="30340" y="23" fill="red" font-size="25">303</text>
+  <text x="30440" y="23" fill="red" font-size="25">304</text>
+  <text x="30540" y="23" fill="red" font-size="25">305</text>
+  <text x="30640" y="23" fill="red" font-size="25">306</text>
+  <text x="30740" y="23" fill="red" font-size="25">307</text>
+  <text x="30840" y="23" fill="red" font-size="25">308</text>
+  <text x="30940" y="23" fill="red" font-size="25">309</text>
+  <text x="31040" y="23" fill="red" font-size="25">310</text>
+  <text x="31140" y="23" fill="red" font-size="25">311</text>
+  <text x="31240" y="23" fill="red" font-size="25">312</text>
+  <text x="31340" y="23" fill="red" font-size="25">313</text>
+  <text x="31440" y="23" fill="red" font-size="25">314</text>
+  <text x="31540" y="23" fill="red" font-size="25">315</text>
+  <text x="31640" y="23" fill="red" font-size="25">316</text>
+  <text x="31740" y="23" fill="red" font-size="25">317</text>
+  <text x="31840" y="23" fill="red" font-size="25">318</text>
+  <text x="31940" y="23" fill="red" font-size="25">319</text>
+  <text x="32040" y="23" fill="red" font-size="25">320</text>
+  <text x="32140" y="23" fill="red" font-size="25">321</text>
+  <text x="32240" y="23" fill="red" font-size="25">322</text>
+  <text x="32340" y="23" fill="red" font-size="25">323</text>
+  <text x="32440" y="23" fill="red" font-size="25">324</text>
+  <text x="32540" y="23" fill="red" font-size="25">325</text>
+  <text x="32640" y="23" fill="red" font-size="25">326</text>
+  <text x="32740" y="23" fill="red" font-size="25">327</text>
+  <text x="32840" y="23" fill="red" font-size="25">328</text>
+  <text x="32940" y="23" fill="red" font-size="25">329</text>
+  <text x="33040" y="23" fill="red" font-size="25">330</text>
+  <text x="33140" y="23" fill="red" font-size="25">331</text>
+  <text x="33240" y="23" fill="red" font-size="25">332</text>
+  <text x="33340" y="23" fill="red" font-size="25">333</text>
+  <text x="33440" y="23" fill="red" font-size="25">334</text>
+  <text x="33540" y="23" fill="red" font-size="25">335</text>
+  <text x="33640" y="23" fill="red" font-size="25">336</text>
+  <text x="33740" y="23" fill="red" font-size="25">337</text>
+  <text x="33840" y="23" fill="red" font-size="25">338</text>
+  <text x="33940" y="23" fill="red" font-size="25">339</text>
+  <text x="34040" y="23" fill="red" font-size="25">340</text>
+  <text x="34140" y="23" fill="red" font-size="25">341</text>
+  <text x="34240" y="23" fill="red" font-size="25">342</text>
+  <text x="34340" y="23" fill="red" font-size="25">343</text>
+  <text x="34440" y="23" fill="red" font-size="25">344</text>
+  <text x="34540" y="23" fill="red" font-size="25">345</text>
+  <text x="34640" y="23" fill="red" font-size="25">346</text>
+  <text x="34740" y="23" fill="red" font-size="25">347</text>
+  <text x="34840" y="23" fill="red" font-size="25">348</text>
+  <text x="34940" y="23" fill="red" font-size="25">349</text>
+  <text x="35040" y="23" fill="red" font-size="25">350</text>
+  <text x="35140" y="23" fill="red" font-size="25">351</text>
+  <text x="35240" y="23" fill="red" font-size="25">352</text>
+  <text x="35340" y="23" fill="red" font-size="25">353</text>
+  <text x="35440" y="23" fill="red" font-size="25">354</text>
+  <text x="35540" y="23" fill="red" font-size="25">355</text>
+  <text x="35640" y="23" fill="red" font-size="25">356</text>
+  <text x="35740" y="23" fill="red" font-size="25">357</text>
+  <text x="35840" y="23" fill="red" font-size="25">358</text>
+  <text x="35940" y="23" fill="red" font-size="25">359</text>
+  <text x="36040" y="23" fill="red" font-size="25">360</text>
+  <text x="36140" y="23" fill="red" font-size="25">361</text>
+  <text x="36240" y="23" fill="red" font-size="25">362</text>
+  <text x="36340" y="23" fill="red" font-size="25">363</text>
+  <text x="36440" y="23" fill="red" font-size="25">364</text>
+  <text x="36540" y="23" fill="red" font-size="25">365</text>
+  <text x="36640" y="23" fill="red" font-size="25">366</text>
+  <text x="36740" y="23" fill="red" font-size="25">367</text>
+  <text x="36840" y="23" fill="red" font-size="25">368</text>
+  <text x="36940" y="23" fill="red" font-size="25">369</text>
+  <text x="37040" y="23" fill="red" font-size="25">370</text>
+  <text x="37140" y="23" fill="red" font-size="25">371</text>
+  <text x="37240" y="23" fill="red" font-size="25">372</text>
+  <text x="37340" y="23" fill="red" font-size="25">373</text>
+  <text x="37440" y="23" fill="red" font-size="25">374</text>
+  <text x="37540" y="23" fill="red" font-size="25">375</text>
+  <text x="37640" y="23" fill="red" font-size="25">376</text>
+  <text x="37740" y="23" fill="red" font-size="25">377</text>
+  <text x="37840" y="23" fill="red" font-size="25">378</text>
+  <text x="37940" y="23" fill="red" font-size="25">379</text>
+  <text x="38040" y="23" fill="red" font-size="25">380</text>
+  <text x="38140" y="23" fill="red" font-size="25">381</text>
+  <text x="38240" y="23" fill="red" font-size="25">382</text>
+  <text x="38340" y="23" fill="red" font-size="25">383</text>
+  <text x="38440" y="23" fill="red" font-size="25">384</text>
+  <text x="38540" y="23" fill="red" font-size="25">385</text>
+  <text x="38640" y="23" fill="red" font-size="25">386</text>
+  <text x="38740" y="23" fill="red" font-size="25">387</text>
+  <text x="38840" y="23" fill="red" font-size="25">388</text>
+  <text x="38940" y="23" fill="red" font-size="25">389</text>
+  <text x="39040" y="23" fill="red" font-size="25">390</text>
+  <text x="39140" y="23" fill="red" font-size="25">391</text>
+  <text x="39240" y="23" fill="red" font-size="25">392</text>
+  <text x="39340" y="23" fill="red" font-size="25">393</text>
+  <text x="39440" y="23" fill="red" font-size="25">394</text>
+  <text x="39540" y="23" fill="red" font-size="25">395</text>
+  <text x="39640" y="23" fill="red" font-size="25">396</text>
+  <text x="39740" y="23" fill="red" font-size="25">397</text>
+  <text x="39840" y="23" fill="red" font-size="25">398</text>
+  <text x="39940" y="23" fill="red" font-size="25">399</text>
+  <! -- tâches planifiées -->
+  <rect width="496" height="21" x="102" y="27" rx="0" ry="0" fill="Red" style="stroke:0;stroke-width:1" />
+  <rect width="396" height="21" x="402" y="52" rx="0" ry="0" fill="Yellow" style="stroke:0;stroke-width:1" />
+  <rect width="296" height="21" x="202" y="77" rx="0" ry="0" fill="Blue" style="stroke:0;stroke-width:1" />
+  <rect width="196" height="21" x="802" y="102" rx="0" ry="0" fill="Maroon" style="stroke:0;stroke-width:1" />
+</svg>
+</body>
+</html>
