@@ -7,6 +7,9 @@ uses
   uWVLibFunctions, uWVLoader, uWVInterfaces, uWVCoreWebView2Args,
   uWVBrowserBase, uWVCoreWebView2SharedBuffer, uWebBrowserForm;
 
+type TBrowserAction = (baBack, baHome, baSetHome, baRefresh);
+
+
 {$R *.res}
 
   function GetString(par: integer): string;
@@ -90,6 +93,7 @@ begin
     GlobalWebView2Loader                := TWVLoader.Create(nil);
     GlobalWebView2Loader.UserDataFolder := IncludeTrailingPathDelimiter(ExtractFileDir(GetModuleName(HINSTANCE))) + '\CustomCache';
     GlobalWebView2Loader.StartWebView2;
+    GlobalWebView2Loader.AreBrowserExtensionsEnabled := true;
     result := 0;
   except
   end;
@@ -122,8 +126,8 @@ end;
 
 function SetBrowserMessageCommunication(aWB: TWebBrowserForm; aAllow: integer; aSndBuffer, aRcvBuffer: HWND): integer; stdcall; export;
 // aAllow=0: bloquer  aAllow<>0: permettre
-// aSndBuffer: adresse (pointer) vers le buffer de message à envoyer
-// aRecBuffer: adresse (pointer) vers le buffer de réception de messages
+// aSndBuffer: adresse (pointer) vers le buffer de message Ã  envoyer
+// aRecBuffer: adresse (pointer) vers le buffer de rÃ©ception de messages
 var
   temp: boolean;
 begin
@@ -188,6 +192,7 @@ begin
     URL := Trim(GetString(aURL));
     if URL='' then exit;
     if aWB.WVBrowser1.Navigate(URL) then result := 0;
+    if result=0 then aWB.AddressCb.Text := URL;
   except
   end;
 end;
@@ -221,6 +226,65 @@ begin
   end;
 end;
 
+function SetBrowserOpenInSameTab(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; export;
+var
+  msg: string;
+begin
+  result := -1;
+  try
+    if not assigned(aWB) then exit;
+    if aWB.ClassName<>'TWebBrowserForm' then exit;
+    if not aWB.WVBrowser1.IsInitialized then exit;
+    aWB.WVBrowser1.OpenInSameTab := (aValue<>0);
+    result := 0;
+  except
+  end;
+end;
+
+function SetBrowserNewWindowRequested(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; export;
+begin
+  result := -1;
+  try
+    if not assigned(aWB) then exit;
+    if aWB.ClassName<>'TWebBrowserForm' then exit;
+    aWB.WVBrowser1.OpenInSameTab := (aValue<>0);
+    aWB.WVBrowser1.SetNewWindowRequested(aValue<>0);
+    result := 0;
+  except
+  end;
+end;
+
+function SetBrowserNavigationStarting(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; export;
+begin
+  result := -1;
+  try
+    if not assigned(aWB) then exit;
+    if aWB.ClassName<>'TWebBrowserForm' then exit;
+    aWB.WVBrowser1.SetNavigationStarting(aValue<>0);
+    result := 0;
+  except
+  end;
+end;
+
+function BrowserAction(aWB: TWebBrowserForm; aAction: TBrowserAction): integer; stdcall; export;
+begin
+  result := -1;
+  try
+    if not assigned(aWB) then exit;
+    if aWB.ClassName<>'TWebBrowserForm' then exit;
+    case aAction of
+      baBack:    aWB.WVBrowser1.GoBack;
+      baHome:    aWB.WVBrowser1.Navigate(aWB.WVBrowser1.DefaultURL);
+      baSetHome: aWB.WVBrowser1.DefaultURL := aWB.AddressCb.Text;
+      baRefresh: aWB.WVBrowser1.Refresh;
+    else
+      exit;
+    end;
+    result := 0;
+  except
+  end;
+end;
+
 
 exports
   InitializeWebView4Delphi,
@@ -231,8 +295,13 @@ exports
   SetBrowserScrollBars,
   BrowserNavigate,
   ExecuteBrowserScript,
-  SetBrowserNavigationPanel;
+  SetBrowserNavigationPanel,
+  SetBrowserOpenInSameTab,
+  SetBrowserNewWindowRequested,
+  SetBrowserNavigationStarting,
+  BrowserAction;
 
 begin
 end.
+
 
