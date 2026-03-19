@@ -47,6 +47,10 @@ function sendMessageToHostApp() {
     window.chrome.webview.postMessage(data);
 }
 
+function sendDirectMessageToHostApp(p) {
+	let data = p;
+    window.chrome.webview.postMessage(data);
+}
 function ShiftRight(){
 	const svg = document.querySelector("svg");
     const vBox = svg.viewBox;

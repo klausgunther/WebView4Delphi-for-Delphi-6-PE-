@@ -1,0 +1,371 @@
+unit uMainForm;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ComCtrls, StdCtrls,
+  uWVBrowser, uWebBrowserForm, uWVCoreWebView2Args, uWVInterfaces,
+
+uWVBrowserBase,
+uWVConstants,
+uWVCoreWebView2,
+uWVCoreWebView2BasicAuthenticationResponse,
+uWVCoreWebView2BrowserExtension,
+uWVCoreWebView2BrowserExtensionList,
+uWVCoreWebView2Certificate,
+uWVCoreWebView2ClientCertificate,
+uWVCoreWebView2ClientCertificateCollection,
+uWVCoreWebView2CompositionController,
+uWVCoreWebView2ContextMenuItem,
+uWVCoreWebView2ContextMenuItemCollection,
+uWVCoreWebView2ContextMenuTarget,
+uWVCoreWebView2Controller,
+uWVCoreWebView2ControllerOptions,
+uWVCoreWebView2Cookie,
+uWVCoreWebView2CookieList,
+uWVCoreWebView2CookieManager,
+uWVCoreWebView2CustomSchemeRegistration,
+uWVCoreWebView2Deferral,
+uWVCoreWebView2Delegates,
+uWVCoreWebView2DownloadOperation,
+uWVCoreWebView2Environment,
+uWVCoreWebView2EnvironmentOptions,
+uWVCoreWebView2ExecuteScriptResult,
+uWVCoreWebView2File,
+uWVCoreWebView2FileSystemHandle,
+uWVCoreWebView2Find,
+uWVCoreWebView2FindOptions,
+uWVCoreWebView2Frame,
+uWVCoreWebView2FrameInfo,
+uWVCoreWebView2FrameInfoCollection,
+uWVCoreWebView2FrameInfoCollectionIterator,
+uWVCoreWebView2HttpHeadersCollectionIterator,
+uWVCoreWebView2HttpRequestHeaders,
+uWVCoreWebView2HttpResponseHeaders,
+uWVCoreWebView2Notification,
+uWVCoreWebView2ObjectCollection,
+uWVCoreWebView2ObjectCollectionView,
+uWVCoreWebView2PermissionSetting,
+uWVCoreWebView2PermissionSettingCollectionView,
+uWVCoreWebView2PointerInfo,
+uWVCoreWebView2PrintSettings,
+uWVCoreWebView2ProcessExtendedInfo,
+uWVCoreWebView2ProcessExtendedInfoCollection,
+uWVCoreWebView2ProcessInfo,
+uWVCoreWebView2ProcessInfoCollection,
+uWVCoreWebView2Profile,
+uWVCoreWebView2RegionRectCollectionView,
+uWVCoreWebView2ScriptException,
+uWVCoreWebView2Settings,
+uWVCoreWebView2SharedBuffer,
+uWVCoreWebView2StringCollection,
+uWVCoreWebView2WebResourceRequest,
+uWVCoreWebView2WebResourceResponse,
+uWVCoreWebView2WebResourceResponseView,
+uWVCoreWebView2WindowFeatures,
+uWVEvents,
+uWVLibFunctions,
+uWVLoader,
+uWVLoaderInternal,
+uWVMiscFunctions,
+uWVTypeLibrary,
+uWVTypes,
+uWVWinControl,
+uWVWindowParent;
+
+type
+// extracted from uWVTypes.pas:
+  {$IFDEF DELPHI12_UP}
+    wvstring = type string;
+  {$ELSE}
+    {$IFDEF FPC}
+      wvstring = type UnicodeString;
+    {$ELSE}
+      wvstring = type WideString;
+    {$ENDIF}
+  {$ENDIF}
+// end of extraction
+
+type
+  TForm1 = class(TForm)
+    MessagesPnl: TPanel;
+    Edit1: TEdit;
+    SendMsgBtn: TButton;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    SharedBufferEdt: TEdit;
+    PostSharedBufferBtn: TButton;
+    Panel3: TPanel;
+    Button2: TButton;
+    OpenDialog1: TOpenDialog;
+    ScrollBar1: TScrollBar;
+    ScrollBar2: TScrollBar;
+    MessagesList: TListBox;
+    Panel4: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    ScrollBar3: TScrollBar;
+    ScrollBar4: TScrollBar;
+    Button1: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    procedure SendMsgBtnClick(Sender: TObject);
+
+    procedure WVBrowser1InitializationError(Sender: TObject; aErrorCode: HRESULT; const aErrorMessage: wvstring);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button2Click(Sender: TObject);
+    procedure ScrollBar1Change(Sender: TObject);
+    procedure ScrollBar2Change(Sender: TObject);
+    procedure ScrollBar3Change(Sender: TObject);
+    procedure ScrollBar4Change(Sender: TObject);
+
+    procedure NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;
+      const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+
+  protected
+    procedure WMMove(var aMessage : TWMMove); message WM_MOVE;
+    procedure WMMoving(var aMessage : TMessage); message WM_MOVING;
+
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+type TBrowserAction = (baBack, baHome, baSetHome, baRefresh);
+
+var
+  Form1: TForm1;
+  WB: TWebBrowserForm;
+  WVBrowser1: TWVBrowser;
+  SndMessage: string;
+
+function InitializeWebView4Delphi: integer; stdcall; external 'DllBrowser.dll';
+function FinalizeWebView4Delphi: integer; stdcall; external 'DllBrowser.dll';
+function ShowBrowser(aDest: HWND; aBorderLess: integer; aX,aY,aW,aH: integer): integer; stdcall; external 'DllBrowser.dll';
+function SetBrowserMessageCommunication(aWB: TWebBrowserForm; aAllow: integer; aSndBuffer, aRcvBuffer: HWND): integer; stdcall; external 'DllBrowser.dll';
+function SendMessageToBrowser(aWB: TWebBrowserForm; aMessage: integer): integer; stdcall; external 'DllBrowser.dll';
+function SetBrowserScrollBars(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
+function BrowserNavigate(aWB: TWebBrowserForm; aURL: integer): integer; stdcall; external 'DllBrowser.dll';
+function ExecuteBrowserScript(aWB: TWebBrowserForm; aScript: integer): integer; stdcall; external 'DllBrowser.dll';
+function SetBrowserOpenInSameTab(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
+function SetBrowserNewWindowRequested(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
+function SetBrowserNavigationStarting(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
+function BrowserAction(aWB: TWebBrowserForm; aAction: TBrowserAction): integer; stdcall; external 'DllBrowser.dll';
+
+
+// documentation: https://pkg.go.dev/github.com/energye/wv/windows
+
+implementation
+
+{$R *.dfm}
+
+const
+  CUSTOM_SHARED_BUFFER_SIZE = 1024;
+
+procedure TForm1.NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;
+      const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
+var
+  TempArgs : TCoreWebView2NewWindowRequestedEventArgs;
+begin
+  // use this event to block a new window for this request.
+  // instead, use a Navigate request inside the same tab.
+//  if not OpenInSameTab then exit;                    // is the option not selected ?
+  TempArgs := TCoreWebView2NewWindowRequestedEventArgs.Create(aArgs);
+  TempArgs.Handled := true;                          // block the New window request
+  TWVBrowser(Sender).Navigate(TempArgs.URI);         // navigate within the current tab
+// showmessage('intercepted');
+  TempArgs.Free;
+end;
+
+
+procedure TForm1.SendMsgBtnClick(Sender: TObject);
+var
+  msg: string;
+begin
+  msg := Edit1.Text;
+  SendMessageToBrowser(WB,integer(@msg));
+end;
+
+procedure TForm1.WVBrowser1InitializationError(Sender: TObject;
+  aErrorCode: HRESULT; const aErrorMessage: wvstring);
+begin
+  showmessage(aErrorMessage);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Top := 0;
+  InitializeWebView4Delphi;
+  WB := TWebBrowserForm(ShowBrowser(Form1.Handle,1,  0,30,620,620));
+  WVBrowser1 := WB.WVBrowser1;
+  SetBrowserNewWindowRequested(WB,1);
+//  SetBrowserNavigationStarting(WB,1);
+end;
+
+procedure TForm1.WMMove(var aMessage : TWMMove);
+begin
+exit;
+  inherited;
+
+  if (WVBrowser1 <> nil) then
+    WVBrowser1.NotifyParentWindowPositionChanged;                  // not yet in DllBrowser
+end;
+
+procedure TForm1.WMMoving(var aMessage : TMessage);                // not yet in DllBrowser
+begin
+exit;
+  inherited;
+
+  if (WVBrowser1 <> nil) then
+    WVBrowser1.NotifyParentWindowPositionChanged;                  // not yet in DllBrowser
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FinalizeWebView4Delphi;
+end;
+
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  URL: string;
+  Initialdir: string;
+begin
+  Initialdir := ExtractFilePath(ParamStr(0));
+  Opendialog1.InitialDir := InitialDir;
+  if not OpenDialog1.Execute then exit;
+  URL := 'File:///' + OpenDialog1.FileName;
+  BrowserNavigate(WB,integer(@URL));
+  ScrollBar3.OnChange := nil;
+  ScrollBar4.OnChange := nil;
+
+  ScrollBar1.Min := 0;
+  ScrollBar2.Min := 0;
+  ScrollBar3.Min := 0;
+  ScrollBar4.Min := 0;
+
+  ScrollBar1.Max := 40000;
+  ScrollBar2.Max := 275;
+  ScrollBar3.Max := 4000;
+  ScrollBar4.Max := 600;
+  ScrollBar3.Position := 1000;
+  ScrollBar4.Position := 275;
+
+  ScrollBar3.OnChange := ScrollBar3Change;
+  ScrollBar4.OnChange := ScrollBar4Change;
+  SetBrowserMessageCommunication(WB,1, 0,MessagesList.Handle);
+  SetBrowserScrollBars(WB,0);      
+end;
+
+procedure TForm1.ScrollBar1Change(Sender: TObject);
+var
+  script: string;
+begin
+  script := 'ShiftHorz('+inttostr(Scrollbar1.Position)+')';
+  ExecuteBrowserScript(WB,integer(@script));
+end;
+
+procedure TForm1.ScrollBar2Change(Sender: TObject);
+var
+  script: string;
+begin
+  script := 'ShiftVert('+inttostr(Scrollbar2.Position)+')';
+  ExecuteBrowserScript(WB,integer(@script));
+end;
+
+procedure TForm1.ScrollBar3Change(Sender: TObject);
+var
+  p: integer;
+  script: string;
+begin
+  p := Scrollbar3.Position;
+  script := 'ZoomHorz('+inttostr(p)+')';
+  ExecuteBrowserScript(WB,integer(@script));
+  Label3.Caption := Format('Horizontal Zoom %d (%3.3f x)',[p,1000/p]);
+end;
+
+procedure TForm1.ScrollBar4Change(Sender: TObject);
+var
+  p: integer;
+  script: string;
+begin
+  p := Scrollbar4.Position;
+  script := 'ZoomVert('+inttostr(p)+')';
+  ExecuteBrowserScript(WB,integer(@script));
+  Label3.Caption := Format('Vertical Zoom %d (%3.3f x)',[p,25/p]);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  scriptCode: string;
+  injectCode: string;
+  f: TextFile;
+begin
+// button invisible as long as the Alert() function problem is not resolved
+//  scriptCode := 'function MyScript(p) {' + #13#10 +
+//                '  Alert("This is my script - "+p);' + #13#10 +
+//                '}' + #13#10;
+// AssignFile(f, 'MyScript.js');
+//  ReWrite(f);
+//  WriteLn(f,scriptCode);
+//  CloseFile(f);
+
+  injectCode := 'const head = document.head;' + #13#10 +
+                'const script = document.createElement("script");' + #13#10 +
+                'script.src = "WebView_Klaus.js";' + #13#10 +
+                'head.appendChild(script);';
+showmessage(injectCode);
+
+  if WVBrowser1.ExecuteScriptWithResult(injectCode) then showmessage('Injection OK')
+                                                    else showmessage('Injection error');
+
+  if WVBrowser1.ExecuteScriptWithResult('console.log("hello");') then showmessage('Script OK')
+                                                                 else showmessage('Script error');
+
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  scriptCode: string;
+begin
+  scriptCode := Trim(Edit1.Text);
+showmessage(scriptCode);
+  if WVBrowser1.ExecuteScriptWithResult(scriptCode) then showmessage('Script OK') else showmessage('Script error');
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+  BrowserAction(WB,baBack);
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  BrowserAction(WB,baHome);
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+  BrowserAction(WB,baSetHome);
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+begin
+  BrowserAction(WB,baRefresh);
+end;
+
+end.
