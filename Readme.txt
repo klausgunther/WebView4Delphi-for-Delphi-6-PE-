@@ -15,7 +15,8 @@ Actually, the features implemented as DLL functions are:
 - sending string messages from a Delphi program to a browser page's HTML/Javascript
 - loading of local files, including SVG images
 - these images are really limitless - the supplied demo image is 40.000 pixels wide, but it could as wass have been 4 Giga pixels...
-- possibility to hide programmatically the browser's internal croll bars
+- possibility to hide/show programmatically the browser's URL field and "Go" button
+- possibility to hide/show programmatically the browser's internal croll bars
 - possibility to shift the SVG's ViewBox horizontally and/or vertically, regardless of the dimension sizes
 - these shifts are done programmatically by a DLL function sending JavaScript snippets to the webpage
 - possibility to zoom in or out
@@ -27,7 +28,6 @@ Actually, the features implemented as DLL functions are:
 - a demo webpage containing a huge SVG image, and the associated JavaScript files
 
 Some of the points stil to be done:
-- manage the component's internal URL field and "Go" button
 - recover the loaded webpage's dimensions
 
 Package content:
@@ -57,3 +57,8 @@ especially concerning the "c,l" part.
 The received messages are appended to a Delphi TList object, acting as a FIFO stack for the handling of these messages.
 An application program (perhaps notified by an OnChange event of the TList object) should always read the first
 item (index 0) of this list, handle it, than delete it, evetually within a loop until the list is empty.
+
+Final note for the release at March 20th, 2026 at 00:43 pm:
+  The navigation seams to stay now completely within the captured browser tab.
+  I did not find any "escaped" new window showing in a separate browser window.
+  However, this is still an ongoing develpment process. If this happens, please let me know the exact conditions !
