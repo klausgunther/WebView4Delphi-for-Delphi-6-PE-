@@ -127,18 +127,12 @@ type
     procedure ScrollBar3Change(Sender: TObject);
     procedure ScrollBar4Change(Sender: TObject);
 
-    procedure NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;
-      const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
-
-  protected
-    procedure WMMove(var aMessage : TWMMove); message WM_MOVE;
-    procedure WMMoving(var aMessage : TMessage); message WM_MOVING;
 
   private
     { Déclarations privées }
@@ -177,22 +171,6 @@ implementation
 const
   CUSTOM_SHARED_BUFFER_SIZE = 1024;
 
-procedure TForm1.NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;
-      const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
-var
-  TempArgs : TCoreWebView2NewWindowRequestedEventArgs;
-begin
-  // use this event to block a new window for this request.
-  // instead, use a Navigate request inside the same tab.
-//  if not OpenInSameTab then exit;                    // is the option not selected ?
-  TempArgs := TCoreWebView2NewWindowRequestedEventArgs.Create(aArgs);
-  TempArgs.Handled := true;                          // block the New window request
-  TWVBrowser(Sender).Navigate(TempArgs.URI);         // navigate within the current tab
-// showmessage('intercepted');
-  TempArgs.Free;
-end;
-
-
 procedure TForm1.SendMsgBtnClick(Sender: TObject);
 var
   msg: string;
@@ -214,25 +192,6 @@ begin
   WB := TWebBrowserForm(ShowBrowser(Form1.Handle,1,  0,30,620,620));
   WVBrowser1 := WB.WVBrowser1;
   SetBrowserNewWindowRequested(WB,1);
-//  SetBrowserNavigationStarting(WB,1);
-end;
-
-procedure TForm1.WMMove(var aMessage : TWMMove);
-begin
-exit;
-  inherited;
-
-  if (WVBrowser1 <> nil) then
-    WVBrowser1.NotifyParentWindowPositionChanged;                  // not yet in DllBrowser
-end;
-
-procedure TForm1.WMMoving(var aMessage : TMessage);                // not yet in DllBrowser
-begin
-exit;
-  inherited;
-
-  if (WVBrowser1 <> nil) then
-    WVBrowser1.NotifyParentWindowPositionChanged;                  // not yet in DllBrowser
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -316,26 +275,17 @@ var
   injectCode: string;
   f: TextFile;
 begin
-// button invisible as long as the Alert() function problem is not resolved
-//  scriptCode := 'function MyScript(p) {' + #13#10 +
-//                '  Alert("This is my script - "+p);' + #13#10 +
-//                '}' + #13#10;
-// AssignFile(f, 'MyScript.js');
-//  ReWrite(f);
-//  WriteLn(f,scriptCode);
-//  CloseFile(f);
-
   injectCode := 'const head = document.head;' + #13#10 +
                 'const script = document.createElement("script");' + #13#10 +
                 'script.src = "WebView_Klaus.js";' + #13#10 +
                 'head.appendChild(script);';
-showmessage(injectCode);
 
-  if WVBrowser1.ExecuteScriptWithResult(injectCode) then showmessage('Injection OK')
-                                                    else showmessage('Injection error');
+  if ExecuteBrowserScript(WB,integer(@injectCode))=0 then showmessage('Injection OK')
+                                                        else showmessage('Injection error');
 
-  if WVBrowser1.ExecuteScriptWithResult('console.log("hello");') then showmessage('Script OK')
-                                                                 else showmessage('Script error');
+  scriptCode := 'Hello';
+  if ExecuteBrowserScript(WB,integer(@scriptCode))<=0 then showmessage('Script OK')
+                                                         else showmessage('Script error');
 
 end;
 
@@ -345,7 +295,7 @@ var
 begin
   scriptCode := Trim(Edit1.Text);
 showmessage(scriptCode);
-  if WVBrowser1.ExecuteScriptWithResult(scriptCode) then showmessage('Script OK') else showmessage('Script error');
+  if ExecuteBrowserScript(WB,integer(@scriptCode))=0 then showmessage('Script OK') else showmessage('Script error');
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
