@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ComCtrls, StdCtrls,
-  uWVBrowser, uWebBrowserForm;
+  uWebBrowserForm;
 
 type
 // extracted from uWVTypes.pas:
@@ -51,7 +51,6 @@ type
     Button7: TButton;
     procedure SendMsgBtnClick(Sender: TObject);
 
-    procedure WVBrowser1InitializationError(Sender: TObject; aErrorCode: HRESULT; const aErrorMessage: wvstring);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button2Click(Sender: TObject);
@@ -78,7 +77,6 @@ type TBrowserAction = (baBack, baHome, baSetHome, baRefresh);
 var
   Form1: TForm1;
   WB: TWebBrowserForm;
-  WVBrowser1: TWVBrowser;
   SndMessage: string;
 
 function InitializeWebView4Delphi: integer; stdcall; external 'DllBrowser.dll';
@@ -112,18 +110,11 @@ begin
   SendMessageToBrowser(WB,integer(@msg));
 end;
 
-procedure TForm1.WVBrowser1InitializationError(Sender: TObject;
-  aErrorCode: HRESULT; const aErrorMessage: wvstring);
-begin
-  showmessage(aErrorMessage);
-end;
-
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Top := 0;
   InitializeWebView4Delphi;
   WB := TWebBrowserForm(ShowBrowser(Form1.Handle,1,  0,30,620,620));
-  WVBrowser1 := WB.WVBrowser1;
   SetBrowserNewWindowRequested(WB,1);
 end;
 
