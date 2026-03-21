@@ -1,5 +1,7 @@
 library DLLBrowser;
 
+// edge://edge-urls/    gives list of Edges's secret URLs
+
 uses
   Windows, Forms, Messages, Controls, SysUtils, Classes, StrUtils, dialogs,
   StdCtrls,
@@ -96,6 +98,67 @@ begin
     GlobalWebView2Loader.AreBrowserExtensionsEnabled := true;
     result := 0;
   except
+  end;
+end;
+
+function InitializeWebView4DelphiWithExtensions(aExtensions: integer): integer; stdcall; export;
+var
+  list: TStringList;
+  s, ext, IniFile: string;
+  i, p: integer;
+begin
+  result := -1;
+  try
+    GlobalWebView2Loader                := TWVLoader.Create(nil);
+    GlobalWebView2Loader.UserDataFolder := IncludeTrailingPathDelimiter(ExtractFileDir(GetModuleName(HINSTANCE))) + '\CustomCache';
+
+    if aExtensions<>0 then begin
+      // get the list of extension definitions
+      //   These definitions are:
+      //      either a full path name to a folder containing the unpacked extension sources
+      //      or a full path name to a packed extension source container (*.crx or *.zip)
+      // any content beyond "//" is ignored
+      IniFile := Trim(GetString(aExtensions));
+      if IniFile<>'' then begin
+        if FileExists(IniFile) then begin
+          list := TStringList.Create;
+          list.LoadFromFile(IniFile);
+          GlobalWebView2Loader.AreBrowserExtensionsEnabled := True;
+          GlobalWebView2Loader.AdditionalBrowserArguments := '--enable-features=msExtensionService';
+          for i:=0 to list.Count-1 do begin
+            s := List.Strings[i];
+            p := pos('//',s);
+            if p>0 then s := LeftStr(s,p-1);
+            ext := LowerCase(ExtractFileExt(s));
+            if ext='' then begin
+              if DirectoryExists(s) then begin
+                // load decompressed extension's source folder
+                s := '--load-extension='+s;
+                GlobalWebView2Loader.AdditionalBrowserArguments := s;
+              end;
+            end else begin
+              showmessage('CAUTION ! The current version of WebView4Delphi does NOT support packed extensions !' +
+                   #13#10+'                The extensions will not be loaded !');
+          {   the packed extensions are not supported by WebView4Delphi ==> crash !
+              if (ext='.crx') or (ext='.zip') then begin
+                if FileExists(s) then begin
+                  // load packed extension's container file (crx or zip)
+                  s := '--pack-extension=' + s;
+                  GlobalWebView2Loader.AdditionalBrowserArguments := s;
+                end;                                      !
+              end;
+          }
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    GlobalWebView2Loader.StartWebView2;
+    GlobalWebView2Loader.AreBrowserExtensionsEnabled := true;
+    result := 0;
+  finally
+    if assigned(list) then list.Free;
   end;
 end;
 
@@ -288,6 +351,7 @@ end;
 
 exports
   InitializeWebView4Delphi,
+  InitializeWebView4DelphiWithExtensions,
   FinalizeWebView4Delphi,
   ShowBrowser,
   SetBrowserMessageCommunication,
