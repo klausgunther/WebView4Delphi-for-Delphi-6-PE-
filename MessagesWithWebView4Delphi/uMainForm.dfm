@@ -228,6 +228,15 @@ object Form1: TForm1
     TabOrder = 10
     OnClick = Button7Click
   end
+  object Button8: TButton
+    Left = 360
+    Top = 0
+    Width = 75
+    Height = 25
+    Caption = 'Extensions'
+    TabOrder = 11
+    OnClick = Button8Click
+  end
   object OpenDialog1: TOpenDialog
     Left = 304
     Top = 120

@@ -4,8 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ComCtrls, StdCtrls,
-  uWebBrowserForm;
+  Dialogs, ExtCtrls, ComCtrls, StdCtrls, StrUtils,
+  uWebBrowserForm, uExtensionForm;
 
 type
 // extracted from uWVTypes.pas:
@@ -49,6 +49,7 @@ type
     Button5: TButton;
     Button6: TButton;
     Button7: TButton;
+    Button8: TButton;
     procedure SendMsgBtnClick(Sender: TObject);
 
     procedure FormCreate(Sender: TObject);
@@ -65,6 +66,7 @@ type
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
 
   private
     { Déclarations privées }
@@ -78,8 +80,11 @@ var
   Form1: TForm1;
   WB: TWebBrowserForm;
   SndMessage: string;
+  IniFile: string;
+  ExtensionList: TStringList;
 
 function InitializeWebView4Delphi: integer; stdcall; external 'DllBrowser.dll';
+function InitializeWebView4DelphiWithExtensions(aExtensions: integer): integer; stdcall; external 'DllBrowser.dll';
 function FinalizeWebView4Delphi: integer; stdcall; external 'DllBrowser.dll';
 function ShowBrowser(aDest: HWND; aBorderLess: integer; aX,aY,aW,aH: integer): integer; stdcall; external 'DllBrowser.dll';
 function SetBrowserMessageCommunication(aWB: TWebBrowserForm; aAllow: integer; aSndBuffer, aRcvBuffer: HWND): integer; stdcall; external 'DllBrowser.dll';
@@ -111,9 +116,20 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+  buttonSelected : Integer;
 begin
   Top := 0;
-  InitializeWebView4Delphi;
+  ExtensionList := TStringList.Create;
+  IniFile := ChangeFileExt(ParamStr(0), '.ini');
+  if FileExists(IniFile) then begin
+    ExtensionList.LoadFromFile(IniFile);
+    buttonSelected := MessageDlg('Start with extensions ?',mtError, mbOKCancel, 0);
+    if buttonSelected = mrOK     then InitializeWebView4DelphiWithExtensions(integer(@IniFile));
+    if buttonSelected = mrCancel then InitializeWebView4Delphi;
+  end else begin
+    InitializeWebView4Delphi;
+  end;
   WB := TWebBrowserForm(ShowBrowser(Form1.Handle,1,  0,30,620,620));
   SetBrowserNewWindowRequested(WB,1);
 end;
@@ -197,7 +213,6 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   scriptCode: string;
   injectCode: string;
-  f: TextFile;
 begin
   injectCode := 'const head = document.head;' + #13#10 +
                 'const script = document.createElement("script");' + #13#10 +
@@ -240,6 +255,16 @@ end;
 procedure TForm1.Button7Click(Sender: TObject);
 begin
   BrowserAction(WB,baRefresh);
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+   Form2.Left := 70;
+   Form2.ListBox1.Items.Text := ExtensionList.Text;
+   if Form2.ShowModal= mrOK then begin
+      Form2.ListBox1.Items.SaveToFile(IniFile);
+      ExtensionList.Text := Form2.ListBox1.Items.Text;
+   end;
 end;
 
 end.
