@@ -1,0 +1,17 @@
+Here are the packed versions of some Edge extensions.
+Actually, there is AdBlockPlus only.
+The *.crx and *.zip versions are not yet supported by WebView4Delphi. They will crash on loading.
+You have to uncompress the *.zip version into a folder respecting the folder structure contained within the ZIP file.
+Then, this folder can be placed anywhere, such as C:\, for instance. So, you might get:
+  C:\EdgeExtensions\AdBlockPlus
+This folder will contain the contents of the AdBlockPlus.zip file.
+
+Next, you have to launch the MessagesWithWebView4Delphi demo program.
+If the MessagesWithWebView4Delphi.ini file is missing, the program will start as usual, without any extension.
+Nouw, you can use the "Extension" button to open a extension configurator windows.
+There, you can navigate to the AdBlockPlus folder. Select it bot do NOT open it !
+Use the "Add" button to add it into the above list, than the "Validate" button to create the ini file.
+
+After restarting the program, the presence of the ini file will be detected, and the program asks if the extensions should be loaded.
+On validating this request, please wait a moment - loading an extension is SLOW !
+But the home page will appear. From now on, AdBlockPlus does its work.
