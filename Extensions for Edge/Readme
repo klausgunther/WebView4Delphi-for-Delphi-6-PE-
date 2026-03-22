@@ -4,7 +4,8 @@ The *.crx and *.zip versions are not yet supported by WebView4Delphi. They will 
 You have to uncompress the *.zip version into a folder respecting the folder structure contained within the ZIP file.
 Then, this folder can be placed anywhere, such as C:\, for instance. So, you might get:
   C:\EdgeExtensions\AdBlockPlus
-This folder will contain the contents of the AdBlockPlus.zip file.
+Here is a link to the contents of the AdBlockPlus.zip file:
+  http:%%klaus.infinityfree.me/AdBlockPlus.zip  (replace %% by // !)
 
 Next, you have to launch the MessagesWithWebView4Delphi demo program.
 If the MessagesWithWebView4Delphi.ini file is missing, the program will start as usual, without any extension.
