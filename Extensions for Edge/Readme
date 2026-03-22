@@ -6,6 +6,7 @@ Then, this folder can be placed anywhere, such as C:\, for instance. So, you mig
   C:\EdgeExtensions\AdBlockPlus
 Here is a link to the contents of the AdBlockPlus.zip file:
   http:%%klaus.infinityfree.me/AdBlockPlus.zip  (replace %% by // !)
+This is required because these files are way to big to fit the Github's upload restrictions.
 
 Next, you have to launch the MessagesWithWebView4Delphi demo program.
 If the MessagesWithWebView4Delphi.ini file is missing, the program will start as usual, without any extension.
