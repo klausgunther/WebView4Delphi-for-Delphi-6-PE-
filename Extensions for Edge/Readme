@@ -8,6 +8,9 @@ Here is a link to the contents of the AdBlockPlus.zip file:
   http:%%klaus.infinityfree.me/AdBlockPlus.zip  (replace %% by // !)
 This is required because these files are way to big to fit the Github's upload restrictions.
 
+By the way, to get the ZIP and CRX versions, I installed the CRX extension into the desktop Edge browser.
+Then, I could navigate to any extension store and use the CRX or ZIP download button of the CRX extenion.
+
 Next, you have to launch the MessagesWithWebView4Delphi demo program.
 If the MessagesWithWebView4Delphi.ini file is missing, the program will start as usual, without any extension.
 Nouw, you can use the "Extension" button to open a extension configurator windows.
