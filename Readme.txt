@@ -13,6 +13,9 @@ Actually, the features implemented as DLL functions are:
 - setting an HTML element's content from the calling Delphi program as string 
 - receiving string messages from the HTML/Javascript into a Delphi TList component
 - sending string messages from a Delphi program to a browser page's HTML/Javascript
+- loading of EDGE extensions in unpacked form. 
+  The packed forms are *.crx or *.zip files, but this is not yet supported by WebView4Delphi (crash).
+  The unpacked form is a folder simpliy containing the packed decmpressed content, respecting the folder structure.
 - loading of local files, including SVG images
 - these images are really limitless - the supplied demo image is 40.000 pixels wide, but it could as wass have been 4 Giga pixels...
 - possibility to hide/show programmatically the browser's URL field and "Go" button
@@ -27,13 +30,15 @@ Actually, the features implemented as DLL functions are:
 - a demo program showing these features
 - a demo webpage containing a huge SVG image, and the associated JavaScript files
 
-Some of the points stil to be done:
+Some of the points still to be done:
 - recover the loaded webpage's dimensions
 
 Package content:
 - full WebView4Delphi sources, modified to fit the above purposes
 - full sources and binaries of the DLLBrowser project - the actuall DLL including these function
 - full sources and binaries of a demo projet: WebView4Delphi_Messages_With_DLL
+- the packed AdBlockPlus extension in ZIP and CRX format
+- a folder with the unpacked AdBlockPlus extension (this one must be used actually !)
 - this file Readme.txt
 - a Licence.txt file
 
