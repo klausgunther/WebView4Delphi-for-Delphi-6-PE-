@@ -139,15 +139,14 @@ begin
             end else begin
               showmessage('CAUTION ! The current version of WebView4Delphi does NOT support packed extensions !' +
                    #13#10+'                The extensions will not be loaded !');
-          {   the packed extensions are not supported by WebView4Delphi ==> crash !
+          {   the packed extensions are not supported by WebView4Delphi ==> crash !  }
               if (ext='.crx') or (ext='.zip') then begin
                 if FileExists(s) then begin
                   // load packed extension's container file (crx or zip)
                   s := '--pack-extension=' + s;
                   GlobalWebView2Loader.AdditionalBrowserArguments := s;
-                end;                                      !
+                end;                                      
               end;
-          }
             end;
           end;
         end;
