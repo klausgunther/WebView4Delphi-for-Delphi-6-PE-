@@ -3,14 +3,30 @@ library DLLBrowser;
 // edge://edge-urls/    gives list of Edges's secret URLs
 
 uses
-  Windows, Forms, Messages, Controls, SysUtils, Classes, StrUtils, dialogs,
+  Windows,
+  Forms,
+  Messages,
+  Controls,
+  SysUtils,
+  Classes,
+  StrUtils,
+  dialogs,
   StdCtrls,
-  uWVBrowser, uWVWinControl, uWVWindowParent, uWVTypes, uWVConstants, uWVTypeLibrary,
-  uWVLibFunctions, uWVLoader, uWVInterfaces, uWVCoreWebView2Args,
-  uWVBrowserBase, uWVCoreWebView2SharedBuffer, uWebBrowserForm;
+  uWVBrowser,
+  uWVWinControl,
+  uWVWindowParent,
+  uWVTypes,
+  uWVConstants,
+  uWVTypeLibrary,
+  uWVLibFunctions,
+  uWVLoader,
+  uWVInterfaces,
+  uWVCoreWebView2Args,
+  uWVBrowserBase,
+  uWVCoreWebView2SharedBuffer,
+  uWebBrowserForm;
 
 type TBrowserAction = (baBack, baHome, baSetHome, baRefresh);
-
 
 {$R *.res}
 
@@ -95,7 +111,6 @@ begin
     GlobalWebView2Loader                := TWVLoader.Create(nil);
     GlobalWebView2Loader.UserDataFolder := IncludeTrailingPathDelimiter(ExtractFileDir(GetModuleName(HINSTANCE))) + '\CustomCache';
     GlobalWebView2Loader.StartWebView2;
-    GlobalWebView2Loader.AreBrowserExtensionsEnabled := true;
     result := 0;
   except
   end;
@@ -121,6 +136,7 @@ begin
       IniFile := Trim(GetString(aExtensions));
       if IniFile<>'' then begin
         if FileExists(IniFile) then begin
+
           list := TStringList.Create;
           list.LoadFromFile(IniFile);
           GlobalWebView2Loader.AreBrowserExtensionsEnabled := True;
@@ -153,8 +169,8 @@ begin
       end;
     end;
 
-    GlobalWebView2Loader.StartWebView2;
     GlobalWebView2Loader.AreBrowserExtensionsEnabled := true;
+    GlobalWebView2Loader.StartWebView2;
     result := 0;
   finally
     if assigned(list) then list.Free;
