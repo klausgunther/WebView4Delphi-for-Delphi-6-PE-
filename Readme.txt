@@ -66,4 +66,4 @@ item (index 0) of this list, handle it, than delete it, evetually within a loop 
 Final note for the release at March 20th, 2026 at 00:43 pm:
   The navigation seams to stay now completely within the captured browser tab.
   I did not find any "escaped" new window showing in a separate browser window.
-  However, this is still an ongoing develpment process. If this happens, please let me know the exact conditions !
+  However, this is still an ongoing development process. If this happens, please let me know the exact conditions !
