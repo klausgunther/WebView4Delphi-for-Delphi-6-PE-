@@ -54,9 +54,14 @@ type
         const aWebView: ICoreWebView2;
         const aArgs: ICoreWebView2WebMessageReceivedEventArgs);
       procedure SetMessageReceiver;
-      procedure NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;    // **Klaus
-        const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
-      procedure SetNewWindowRequested(aAction: boolean);
+
+      procedure NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;         // **Klaus
+        const aArgs: ICoreWebView2NewWindowRequestedEventArgs);                            // **Klaus
+      procedure SetNewWindowRequested(aAction: boolean);                                   // **Klaus
+
+      procedure NavigationStarting(Sender: TObject; const aWebView: ICoreWebView2;         // **Klaus
+        const aArgs: ICoreWebView2NavigationStartingEventArgs);                            // **Klaus
+      procedure SetNavigationStarting(aAction: boolean);                                   // **Klaus
 
     published
       property BrowserExecPath;
@@ -189,22 +194,6 @@ implementation
 const
   CUSTOM_SHARED_BUFFER_SIZE = 1024;
 
-{procedure TWVBrowser.NewWindowRequested(Sender: TObject; const aWebView: ICoreWebView2;
-      const aArgs: ICoreWebView2NewWindowRequestedEventArgs);
-var
-  TempArgs : TCoreWebView2NewWindowRequestedEventArgs;
-begin
-showmessage('try interception');
-  // use this event to block a new window for this request.
-  // instead, use a Navigate request inside the same tab.
-//  if not OpenInSameTab then exit;                    // is the option not selected ?
-  TempArgs := TCoreWebView2NewWindowRequestedEventArgs.Create(aArgs);
-  TempArgs.Handled := true;                          // block the New window request
-  TWVBrowser(Sender).Navigate(TempArgs.URI);         // navigate within the current tab
- showmessage('intercepted '+TempArgs.URI);
-  TempArgs.Free;
-end;    }
-
 procedure AppendStringToTListBox(s: string; adest: HWND);
 var
   s1, s2: string;
@@ -264,6 +253,26 @@ begin
   if aAction then OnNewWindowRequested := NewWindowRequested
              else OnNewWindowRequested := nil;
 end;
+
+procedure TWVBrowser.NavigationStarting(Sender: TObject; const aWebView: ICoreWebView2;
+  const aArgs: ICoreWebView2NavigationStartingEventArgs);
+var
+  URI: String;
+  pURI: PWidechar;
+begin
+  SetLength(URI,255);
+  aArgs.Get_uri(pURI);
+  URI := WideCharToString(pURI);
+  showmessage('NavigationStarting: '+URI);           // URI is correct IF launched by "open in new window"
+                                                     // otherwise, the browser crashes and does not fire the event !
+end;
+
+procedure TWVBrowser.SetNavigationStarting(aAction: boolean);
+begin
+  if aAction then OnNavigationStarting := NavigationStarting
+             else OnNavigationStarting := nil;
+end;
+
 // **Klaus addon end
 
 function TWVBrowser.GetParentForm : TCustomForm;
