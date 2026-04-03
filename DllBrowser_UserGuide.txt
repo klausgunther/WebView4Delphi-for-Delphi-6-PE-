@@ -39,12 +39,34 @@ In Delphi terms, all functions obey the same scheme:
 The result is always a n integer value. This value is generally -1 on error, or 0 if ok.
 There is a single exception of this rule, documented in the section of the concerned function.
 
-Function to create the WebVew4Delphi environment
-================================================
+For Panoramic, the calling interface is similar:
+  dim res%
+  ...
+  res% = dll_calln("DLLFunction",p1,...,pn)
+with n being the parameter count (0...6).
+All parameters must be of integer type.
+String are passed by adr(variable$).
+
+Function to create the WebVew4Delphi environment without extensions
+===================================================================
 
 Syntax:
-  res := InitializeWebView4Delphi;    
+  res := InitializeWebView4Delphi; 
+  res% = dll_call0("InitializeWebView4Delphi")  
     parameters: none
+    return value:  -1 if error  0 if ok
+  
+This function mst be called once, before any call to any other functions of the library.
+It can be called at any moment, even in the OnCreate event of the main form.
+
+Function to create the WebVew4Delphi environment with extensions
+================================================================
+
+Syntax:
+  res := InitializeWebView4DelphiWithExtensions(aExtensions: integer);    
+  res% = dll_call1("InitializeWebView4DelphiWithExtensions",aExtensions%);    
+    parameters: aExtension = address of a string variable
+	                 this variable contains the full path and name of the ini file specifying the extensions
     return value:  -1 if error  0 if ok
   
 This function mst be called once, before any call to any other functions of the library.
@@ -55,6 +77,7 @@ Function to remove the WebVew4Delphi environment
 
 Syntax:
   res := FinalizeWebView4Delphi;    
+  res% = dll_call0("FinalizeWebView4Delphi")   
     parameters: none
     return value:  -1 if error  0 if ok
 	
@@ -66,6 +89,7 @@ Function to create and show a WebBrowser in a Containing object
 
 Syntax:
   WBF := ShowBrowser(TargetHandle,BorderLess, X,Y,W,H);  
+  WBF% = dll_call6("ShowBrowser",handle(target%),BorderLess%, X%,Y%,W%,H%);  
     parameters: TargetHandle = handle of the target container (Form, Tab, Container, Panel, ...)
 	            BorderLess  = flag to suppress border and title bar of the browser  0=show borders  <>0 = no borders
 				X,Y = coordinates in client units for the upper left corner of the browser within the target object
@@ -73,17 +97,45 @@ Syntax:
     return value:  0 if error  <>0 if ok (the return value is the created TWebBrowserForm object.
 	
 This function creates the WebView browser, attaches it to the WebView4Delphi environment and loads it into the target object.
-Soon, there will be another function allowing to move and/or resize the browser window, even to change the target object.
 
 The returned TWebBrowserForm object can be used within the calling program using the type definition supplied by the
 uWebBrowserForm.pas unit (from the present "WebView4Delphi Sources.zip" file. This is also the browser reference which must 
 be passed to any other library function inorder to identify the targetted browser. 	
+
+Function to relocate a WebBrowser in a Containing object
+========================================================
+
+Syntax:
+  WBF := LocalizeBrowser(WBF,TargetHandle, X,Y,W,H);  
+  WBF% = dll_call6("LocalizeBrowser",WBF%,handle(target%), X%,Y%,W%,H%);  
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+             	TargetHandle = handle of the target container (Form, Tab, Container, Panel, ...)
+				X,Y = coordinates in client units for the upper left corner of the browser within the target object
+				W,H = dimensions of the browser window in pixels
+		any parameter with value=-1 will be ignored
+    return value:  0 if error  <>0 if ok (the return value is the created TWebBrowserForm object.
+	
+This function changed the WebView browser parameters with values <>-1.
+It even can move the browser to another container (even outside of the current program !).
+
+Function to delete a browser
+============================
+
+Syntax:
+  WBF := DeleteBrowser(WBF);  
+  WBF% dll_call1("DeleteBrowser",WBF%)  
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+    return value:  0 if ok  <>0 if error
+	
+This function creates the WebView browser, attaches it to the WebView4Delphi environment and loads it into the target object.
+
 
 Function to enable a WebBrowser to receive and send text messages from and to a browser webpage
 =============================================================================================== 
 
 Syntax:
   res := SetBrowserMessageCommunication(WFB,Allow,SndBufferHandle,RcvBufferHandle); 
+  res% = dll_call4("SetBrowserMessageCommunication",WFB%,Allow%,SndBufferHandle%,RcvBufferHandle%)
     parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
 	            Allow  = flag to allow or not the message functionalities  0 = inhibited    <>0 = activated
 				SndBufferHandle = handle of a LIST object containing the text to send to the browser page
@@ -108,6 +160,7 @@ Function to send a message to the browser
 
 Syntax:
   res := SendMessageToBrowser(WBF,MessageID);
+  res% = dll_call2("SendMessageToBrowser",WBF%,MessageID%)
     parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
 	            MessageID  = identificator of the message
 				               This can be:
@@ -133,6 +186,7 @@ Function to navigate to a URL
 
 Syntax:
   res := BrowserNavigate(WBF,UrlID);
+  res% = dll_call2("BrowserNavigate",WBF%,UrlID%)
     parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
 	            Action = action code for the scrollbar managment   0 = hide the scrollbars    <>0 = show the scrollbars
 	            UrlID  = identificator of the URL string
@@ -147,11 +201,22 @@ Syntax:
 	but may be used also to load files from local disks. In this case, the full path name tu the file must be
 	prefixed with the "file:///" protocol specification.
 
+Function to manage the browser's navigation panel
+=================================================
+
+Syntax:
+  res := SetBrowserNavigationPanel(aWB,aAction);
+  res% = dll_call2("SetBrowserNavigationPanel",aWB%,aAction%)
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the navigation panel managment   0 = hide the panel    <>0 = show the panel
+    return value:  -1 if error  0 if ok 
+
 Function to manage the browser's internal scroll bars
 =====================================================
 
 Syntax:
   res := SetBrowserScrollBars(WBF,Action);
+  res% = dll_call2("SetBrowserScrollBars",WBF%,Action%)
     parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
 	            Action = action code for the scrollbar managment   0 = hide the scrollbars    <>0 = show the scrollbars
     return value:  -1 if error  0 if ok 
@@ -164,6 +229,7 @@ Function do execute a JavaScript
 
 Syntax:
   res := ExecuteBrowserScript(WBF,ScriptID);
+  res% = dll_call2("ExecuteBrowserScript",WBF%,ScriptID%)
     parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
 	            Value = script string identifier
 				               This can be:
@@ -180,6 +246,7 @@ Function to manage the browser's address panel
 
 Syntax:
   res := SetBrowserAdddressPanel(WBF,Action);
+  res% = dll_call2("SetBrowserAdddressPanel",WBF%,Action%)
     parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
 	            Action = action code for the address panel managment   0 = hide the panel    <>0 = show the panel
     return value:  -1 if error  0 if ok 
@@ -188,6 +255,45 @@ This function acts on the browser's internal adresss panel showing an URL field 
 Sometimes, it is necessary to hide those parts and manage the URL navigation programmatically. 
 For that purpose, this function can be used to hide or show the Address Panel.
 
+Function to force the browser to open all links within the same window and tab
+==============================================================================
 
+Syntax:
+  res := SetBrowserOpenInSameTab(WBF,Action);
+  res% = dll_call2("SetBrowserOpenInSameTab",WBF%,Action%)
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the navigation behaviour   0 = let the default behaviour    <>0 = force all to current tab
+    return value:  -1 if error  0 if ok 
+
+This functions forces the browser to stay within a single tab for all navigation targets.
+This is the default mode for captured browser implementations.
+
+Function to intercept the new window request for navigation targets 
+===================================================================
+
+Syntax:
+  res := SetBrowserNewWindowRequested(WBF,Action);
+  res% = dll_call2("SetBrowserNewWindowRequested",WBF%,Action%)
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function
+	            Action = action code for the new window request   0 = let the default behaviour    <>0 = intercept new window reauests
+    return value:  -1 if error  0 if ok 
+	
+This functions instructs the browser to intercept all requests supposed to open a link in a new window and force it to the same tab.
+This is the default mode for captured browser implementations.
+  
+Function to perform several basic browser actions
+================================================= 
+Syntax:
+  res := BrowserAction(WBF,Action);
+  res% = dll_call2("BrowserAction",WBF%,Action%)
+    parameters: WBF = TWebBrowserForm returned by the ShowBrowser function 
+	            Action = code for the action to be performed  
+				  0 (baBack)       go back to the page previousmy loaded
+				  1 (baHome)       go to the home page
+				  2 (baSetHome)    define the current page to be the home page
+				  3 (baRefresh)    reload the current page
+    return value:  -1 if error  0 if ok 
+  
 Note:
-  This documentation reflects the actual implementtion level on March 11th, 2026.
+  This documentation reflects the actual implementtion level on April 3rd, 2026.
+  
