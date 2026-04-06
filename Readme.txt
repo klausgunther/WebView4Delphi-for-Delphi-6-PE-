@@ -13,9 +13,10 @@ Actually, the features implemented as DLL functions are:
 - setting an HTML element's content from the calling Delphi program as string 
 - receiving string messages from the HTML/Javascript into a Delphi TList component
 - sending string messages from a Delphi program to a browser page's HTML/Javascript
+- ability to create more than 1 browser in the same program, release them all or a single one selectively
 - loading of EDGE extensions in unpacked form. 
   The packed forms are *.crx or *.zip files, but this is not yet supported by WebView4Delphi (crash).
-  The unpacked form is a folder simpliy containing the packed decmpressed content, respecting the folder structure.
+  The unpacked form is a folder simply containing the packed decompressed content, respecting the folder structure.
 - loading of local files, including SVG images
 - these images are really limitless - the supplied demo image is 40.000 pixels wide, but it could as wass have been 4 Giga pixels...
 - possibility to hide/show programmatically the browser's URL field and "Go" button
@@ -25,8 +26,7 @@ Actually, the features implemented as DLL functions are:
 - possibility to zoom in or out
 - the SVG demo file represents a table with 11 rows and 400 columns, each column 100 pixels wide, each row 25 pixels high.
 - a click into any cell of the table sends a message so the Delphi program indicating the x,y coordinates of the click,
-  as well as the cell coordinates co,row. Even after shifting the VieBox, with or without zoom, these cell indexes
-  are always correct.
+  as well as the cell coordinates col,row. Even after shifting the ViewBox, with or without zoom, these cell indexes are always correct.
 - a demo program showing these features
 - a demo webpage containing a huge SVG image, and the associated JavaScript files
 
@@ -63,7 +63,7 @@ The received messages are appended to a Delphi TList object, acting as a FIFO st
 An application program (perhaps notified by an OnChange event of the TList object) should always read the first
 item (index 0) of this list, handle it, than delete it, evetually within a loop until the list is empty.
 
-Final note for the release at March 20th, 2026 at 00:43 pm:
+Final note for the release at April 6th, 2026 at 09:51 am.
   The navigation seams to stay now completely within the captured browser tab.
   I did not find any "escaped" new window showing in a separate browser window.
-  However, this is still an ongoing development process. If this happens, please let me know the exact conditions !
+  However, this is still an ongoing develpment process. If this happens, please let me know the exact conditions !
