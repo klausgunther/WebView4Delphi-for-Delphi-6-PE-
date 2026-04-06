@@ -12,6 +12,7 @@ uses
   StrUtils,
   dialogs,
   StdCtrls,
+  Contnrs,
   uWVBrowser,
   uWVWinControl,
   uWVWindowParent,
@@ -28,16 +29,17 @@ uses
 
 type TBrowserAction = (baBack, baHome, baSetHome, baRefresh);
 
+var
+  WebView4Delphi_Initialized: boolean;
+  WebBrowsers: TObjectList;
+
 {$R *.res}
 
   function GetString(par: integer): string;
   var
-    n, Len, cnt, i: integer;
+    Len, cnt, i: integer;
     memo: TMemo;
-    lb: TListBox;
     s1, s2: string;
-    pb: pbyte;
-    pi: pinteger;
 
     function GetClassName(Handle: THandle): String;
     var
@@ -108,9 +110,16 @@ function InitializeWebView4Delphi: integer; stdcall; export;
 begin
   result := -1;
   try
+    if WebView4Delphi_Initialized then exit;
     GlobalWebView2Loader                := TWVLoader.Create(nil);
     GlobalWebView2Loader.UserDataFolder := IncludeTrailingPathDelimiter(ExtractFileDir(GetModuleName(HINSTANCE))) + '\CustomCache';
     GlobalWebView2Loader.StartWebView2;
+    if GlobalWebView2Loader.ErrorCode<>0 then begin
+      showmessage('Error WebView code '+inttostr(GlobalWebView2Loader.ErrorCode) + #13#10 + GlobalWebView2Loader.ErrorMessage);
+      exit;
+    end;
+    WebView4Delphi_Initialized := true;
+    WebBrowsers := TObjectList.Create(false);
     result := 0;
   except
   end;
@@ -124,6 +133,7 @@ var
 begin
   result := -1;
   try
+    if WebView4Delphi_Initialized then exit;
     GlobalWebView2Loader                := TWVLoader.Create(nil);
     GlobalWebView2Loader.UserDataFolder := IncludeTrailingPathDelimiter(ExtractFileDir(GetModuleName(HINSTANCE))) + '\CustomCache';
 
@@ -161,7 +171,7 @@ begin
                   // load packed extension's container file (crx or zip)
                   s := '--pack-extension=' + s;
                   GlobalWebView2Loader.AdditionalBrowserArguments := s;
-                end;                                      
+                end;
               end;
             end;
           end;
@@ -171,6 +181,8 @@ begin
 
     GlobalWebView2Loader.AreBrowserExtensionsEnabled := true;
     GlobalWebView2Loader.StartWebView2;
+    WebView4Delphi_Initialized := true;
+    WebBrowsers := TObjectList.Create(false);
     result := 0;
   finally
     if assigned(list) then list.Free;
@@ -178,10 +190,22 @@ begin
 end;
 
 function FinalizeWebView4Delphi: integer; stdcall; export;
+var
+  i, n: integer;
 begin
   result := -1;
   try
+    if not WebView4Delphi_Initialized then exit;
+    n := WebBrowsers.Count;
+    if n>0 then begin
+      for i:=n-1 downto 0 do begin
+        TWebBrowserForm(WebBrowsers.Items[i]).Destroy;
+        WebBrowsers.Delete(i);
+      end;
+    end;
+    FreeAndNil(WebBrowsers);
     DestroyGlobalWebView2Loader;
+    WebView4Delphi_Initialized := false;
     result := 0;
   except
   end;
@@ -195,8 +219,10 @@ begin
     if aBorderLess<>0 then WebBrowserForm.BorderStyle := bsNone;
     if aDest<>0 then WebBrowserForm.ParentWindow := aDest;
     WebBrowserForm.Show;
+    WebBrowserForm.WVBrowser1.OpenInSameTab := true;
+    WebBrowserForm.WVBrowser1.SetNewWindowRequested(true);
     if (aX+aY+aW+aH)<>0 then WebBrowserForm.SetBounds(aX,aY,aW,aH);
-//    WebBrowserForm.WVBrowser1.ClearCache;
+    WebBrowsers.Add(WebBrowserForm);
     result := integer(WebBrowserForm);
   except
   end;
@@ -243,8 +269,6 @@ end;
 
 
 function SetBrowserScrollBars(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; export;
-var
-  msg: string;
 begin
   result := -1;
   try
@@ -291,8 +315,6 @@ begin
 end;
 
 function SetBrowserNavigationPanel(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; export;
-var
-  msg: string;
 begin
   result := -1;
   try
@@ -305,8 +327,6 @@ begin
 end;
 
 function SetBrowserOpenInSameTab(aWB: TWebBrowserForm; aValue: integer): integer; stdcall; export;
-var
-  msg: string;
 begin
   result := -1;
   try
