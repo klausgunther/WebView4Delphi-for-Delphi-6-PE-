@@ -10,7 +10,7 @@ uses
   {$IFDEF DELPHI16_UP}
   Winapi.Windows, System.Classes, System.Types, Winapi.ActiveX, System.SysUtils,
   {$ELSE}
-  Windows, Classes, ActiveX, SysUtils,
+  Windows, Classes, ActiveX, SysUtils,     Dialogs,
   {$ENDIF}
   uWVInterfaces, uWVTypeLibrary, uWVTypes;
 
