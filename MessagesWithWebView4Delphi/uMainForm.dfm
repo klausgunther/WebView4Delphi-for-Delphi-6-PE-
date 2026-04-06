@@ -238,7 +238,7 @@ object Form1: TForm1
     OnClick = Button8Click
   end
   object OpenDialog1: TOpenDialog
-    Left = 304
-    Top = 120
+    Left = 24
+    Top = 56
   end
 end

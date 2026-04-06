@@ -33,7 +33,6 @@ type
     PostSharedBufferBtn: TButton;
     Panel3: TPanel;
     Button2: TButton;
-    OpenDialog1: TOpenDialog;
     ScrollBar1: TScrollBar;
     ScrollBar2: TScrollBar;
     MessagesList: TListBox;
@@ -50,6 +49,7 @@ type
     Button6: TButton;
     Button7: TButton;
     Button8: TButton;
+    OpenDialog1: TOpenDialog;
     procedure SendMsgBtnClick(Sender: TObject);
 
     procedure FormCreate(Sender: TObject);
@@ -83,6 +83,7 @@ var
   IniFile: string;
   ExtensionList: TStringList;
 
+
 function InitializeWebView4Delphi: integer; stdcall; external 'DllBrowser.dll';
 function InitializeWebView4DelphiWithExtensions(aExtensions: integer): integer; stdcall; external 'DllBrowser.dll';
 function FinalizeWebView4Delphi: integer; stdcall; external 'DllBrowser.dll';
@@ -92,9 +93,6 @@ function SendMessageToBrowser(aWB: integer; aMessage: integer): integer; stdcall
 function SetBrowserScrollBars(aWB: integer; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
 function BrowserNavigate(aWB: integer; aURL: integer): integer; stdcall; external 'DllBrowser.dll';
 function ExecuteBrowserScript(aWB: integer; aScript: integer): integer; stdcall; external 'DllBrowser.dll';
-function SetBrowserOpenInSameTab(aWB: integer; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
-function SetBrowserNewWindowRequested(aWB: integer; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
-function SetBrowserNavigationStarting(aWB: integer; aValue: integer): integer; stdcall; external 'DllBrowser.dll';
 function BrowserAction(aWB: integer; aAction: TBrowserAction): integer; stdcall; external 'DllBrowser.dll';
 
 
@@ -131,7 +129,6 @@ begin
     InitializeWebView4Delphi;
   end;
   WB := ShowBrowser(Form1.Handle,1,  0,30,620,620);
-  SetBrowserNewWindowRequested(WB,1);
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
